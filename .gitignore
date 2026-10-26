@@ -1,6 +1,7 @@
-node_modules/
 .env
 .env.*
 !.env.example
 npm-debug.log*
 qa-*.png
+node_modules/
+data/uploads/
