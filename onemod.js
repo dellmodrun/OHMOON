@@ -1,5 +1,6 @@
 (()=>{
-const LOGO='/assets/onemod-logo-transparent.png';
+const BASE=location.pathname==='/onemod'||location.pathname.startsWith('/onemod/')?'/onemod':'';
+const LOGO=BASE+'/assets/onemod-logo-transparent.png';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const txt=(el,v)=>{if(el&&el.textContent!==v)el.textContent=v};
 const html=(el,v)=>{if(el&&el.innerHTML!==v)el.innerHTML=v};
@@ -10,14 +11,14 @@ function common(){
  document.documentElement.dataset.brand='onemod';
  document.title='Onemod — Modify the launch';
  $$('link[rel="icon"],link[rel="shortcut icon"],link[rel="apple-touch-icon"]').forEach(x=>{if(!x.dataset.onemod)x.remove()});
- if(!$('link[data-onemod="favicon"]')){const l=document.createElement('link');l.rel='icon';l.type='image/png';l.sizes='64x64';l.href='/assets/onemod-favicon.png?v=4';l.dataset.onemod='favicon';document.head.appendChild(l)}
- if(!$('link[data-onemod="apple"]')){const l=document.createElement('link');l.rel='apple-touch-icon';l.sizes='180x180';l.href='/brand/app-apple-180.png?v=4';l.dataset.onemod='apple';document.head.appendChild(l)}
+ if(!$('link[data-onemod="favicon"]')){const l=document.createElement('link');l.rel='icon';l.type='image/png';l.sizes='64x64';l.href=BASE+'/assets/onemod-favicon.png?v=4';l.dataset.onemod='favicon';document.head.appendChild(l)}
+ if(!$('link[data-onemod="apple"]')){const l=document.createElement('link');l.rel='apple-touch-icon';l.sizes='180x180';l.href=BASE+'/brand/app-apple-180.png?v=4';l.dataset.onemod='apple';document.head.appendChild(l)}
  const md=$('meta[name="description"]'); if(md)md.content='Onemod is a modular genesis layer for tokens launching into Pump.fun.';
  $$('img').forEach(img=>{const src=img.getAttribute('src')||'';if(src.includes('/brand/mark-')||src.includes('/brand/app-')||src.includes('/mascot/pose-')){img.src=LOGO;img.alt='Onemod'}});
  $$('.brand,.brand-m').forEach(a=>{if(!a.querySelector('.onemod-word'))a.innerHTML=`<img class="mark" src="${LOGO}" alt="Onemod"><span class="onemod-word">onemod</span>`});
  $$('.tn-brand').forEach(a=>{if(!a.querySelector('.onemod-word'))a.innerHTML=`<img class="mark" src="${LOGO}" alt="Onemod"><span class="onemod-word">onemod</span>`});
  const nav={'/':'launch board','/live':'live launches','/calls':'signals','/burns':'receipts','/launch':'configure','/how':'protocol'};
- $$('a[href]').forEach(a=>{const h=a.getAttribute('href');if(nav[h]&&(a.matches('.sidelink,.topnav a,.mobilebar a')||a.closest('nav')))txt(a,nav[h]);});
+ $$('a[href]').forEach(a=>{const raw=a.getAttribute('href');const h=BASE&&raw?.startsWith(BASE)?raw.slice(BASE.length)||'/':raw;if(nav[h]&&(a.matches('.sidelink,.topnav a,.mobilebar a')||a.closest('nav')))txt(a,nav[h]);});
  $$('a.btn[href="/launch"],button.btn').forEach(el=>{if(/create (a )?coin|wallet to launch/i.test(el.textContent))txt(el,el.tagName==='A'?'configure launch':'Connect wallet')});
  $$('.xlink').forEach(a=>{if(/\$LAUNCH|\$ONEMOD/i.test(a.textContent)){txt(a,'$ONEMOD');a.href='#'}});
  $$('footer').forEach(f=>{f.innerHTML=f.innerHTML.replace(/launch/gi,'Onemod').replace(/Raydium, StonkFun or pump\.fun/gi,'Pump.fun')});
@@ -34,7 +35,7 @@ function home(){
  const ctas=$$('.hero-cta .btn');if(ctas[0])txt(ctas[0],'configure a launch');if(ctas[1])txt(ctas[1],'read the protocol');
  const stats=$$('.hstat');[['24','manifests committed'],['6','modules available'],['100%','receipts public']].forEach((v,i)=>{const d=stats[i]?.querySelector('div:last-child');if(d)html(d,`<b${i===1?' class="pos"':''}>${v[0]}</b><span>${v[1]}</span>`)});
  txt($('.hp-say'),'one market. better genesis mechanics.');
- const ticket=$('.hp-ticket');if(ticket){ticket.href='/how';html(ticket,'<span class="hp-tk-top">genesis module</span><span class="hp-tk-main"><b>Origin</b> <span class="mono">01</span></span><span class="hp-tk-mc mono">PUBLIC RECEIPT</span>')}
+ const ticket=$('.hp-ticket');if(ticket){ticket.href=BASE+'/how';html(ticket,'<span class="hp-tk-top">genesis module</span><span class="hp-tk-main"><b>Origin</b> <span class="mono">01</span></span><span class="hp-tk-mc mono">PUBLIC RECEIPT</span>')}
  txt($('.trend .sec-head h2'),'module activity');txt($('.trend .sec-head .muted'),'live protocol previews');txt($('.board-head h2'),'the launch board');
  $$('.tile').forEach((card,i)=>{txt($('.tile-name',card),projects[i%projects.length]);txt($('.tile-tick',card),'$MOD'+String(i+1).padStart(2,'0'))});
  $$('.ccard').forEach((card,i)=>{const name=$('.cc-name',card);if(name)html(name,`${projects[i%projects.length]}<small>$${['ZERO','CURVE','SIGNAL','ORIGIN','PROOF','ROUTE'][i%6]}${String(i+1).padStart(2,'0')}</small>`);const desc=card.querySelector('p');if(desc)txt(desc,['Genesis manifest committed. Execution routes directly to Pump.fun.','Block-zero creator advantage disabled by the selected launch module.','Public configuration receipt available before curve activation.','Liquidity remains on the native Pump.fun market.'][i%4])});
@@ -64,7 +65,7 @@ function secondary(){
  if($('.calls-head')){txt($('.calls-head h1'),'community signals.');const p=$('.calls-head p');if(p)txt(p,'Wallet-weighted signals around active launches. Calls inform discovery; they never change the committed genesis rules.');const h=$('.calls-feed .sec-head h2');if(h)txt(h,'signal feed')}
  if($('.burns-head')){txt($('.burns-head h1'),'protocol receipts.');const p=$('.burns-head p');if(p)txt(p,'A public ledger of module execution, value routing and post-launch actions linked back to each genesis manifest.');$$('.burns-head,.card.pad').forEach(x=>x.innerHTML=x.innerHTML.replace(/burns?/gi,'receipts').replace(/burned/gi,'verified'))}
 }
-function apply(){if(lock)return;lock=true;try{common();const path=location.pathname;if(path==='/')home();if(path==='/how')how();if(path==='/launch')launch();secondary();document.documentElement.classList.add('onemod-ready')}finally{lock=false}}
+function apply(){if(lock)return;lock=true;try{common();const path=BASE?location.pathname.slice(BASE.length)||'/':location.pathname;if(path==='/')home();if(path==='/how'||path==='/how/')how();if(path==='/launch'||path==='/launch/')launch();secondary();document.documentElement.classList.add('onemod-ready')}finally{lock=false}}
 let timer;new MutationObserver(()=>{clearTimeout(timer);timer=setTimeout(apply,60)}).observe(document.documentElement,{childList:true,subtree:true});
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply);else apply();setTimeout(apply,500);setTimeout(apply,1800);
 })();
