@@ -1,5 +1,6 @@
 (()=>{
 const BASE=location.pathname==='/onemod'||location.pathname.startsWith('/onemod/')?'/onemod':'';
+const STATIC_PAGES=location.hostname.endsWith('.github.io');
 const LOGO=BASE+'/assets/onemod-logo-transparent.png';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const txt=(el,v)=>{if(el&&el.textContent!==v)el.textContent=v};
@@ -52,7 +53,7 @@ async function renderLaunches(force=false){
  if(!force&&Date.now()-(renderLaunches.last||0)<4000)return;renderLaunches.last=Date.now();
  let launches=[];
  try{launches=JSON.parse(localStorage.getItem('onemod_launches')||'[]')}catch{}
- try{const response=await fetch(`${BASE}/api/onemod/launches`,{headers:{accept:'application/json'}});if(response.ok){const shared=await response.json();const seen=new Set;launches=[...shared,...launches].filter(item=>item?.signature&&!seen.has(item.signature)&&seen.add(item.signature))}}catch{}
+ if(!STATIC_PAGES)try{const response=await fetch(`${BASE}/api/onemod/launches`,{headers:{accept:'application/json'}});if(response.ok){const shared=await response.json();const seen=new Set;launches=[...shared,...launches].filter(item=>item?.signature&&!seen.has(item.signature)&&seen.add(item.signature))}}catch{}
  if(!launches.length)return;
  grid.innerHTML=launches.slice(0,24).map(item=>`<article class="om-launch-card"><div class="om-launch-card-top"><span class="om-token-mark">${esc((item.symbol||'?').slice(0,2))}</span><div><h3>${esc(item.name)}</h3><b>$${esc(item.symbol)}</b></div><span class="om-verified">VERIFIED</span></div><dl><div><dt>mint</dt><dd>${esc(item.mint.slice(0,6))}…${esc(item.mint.slice(-6))}</dd></div><div><dt>creator</dt><dd>${esc(item.creator.slice(0,6))}…${esc(item.creator.slice(-6))}</dd></div></dl><div class="om-card-actions"><a href="https://pump.fun/coin/${encodeURIComponent(item.mint)}" target="_blank" rel="noopener">open on Pump ↗</a><a href="https://solscan.io/tx/${encodeURIComponent(item.signature)}" target="_blank" rel="noopener">receipt ↗</a></div></article>`).join('');
 }

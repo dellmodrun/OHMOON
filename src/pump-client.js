@@ -7,6 +7,7 @@ globalThis.Buffer ||= Buffer;
 globalThis.process ||= process;
 
 const BASE = location.pathname === '/onemod' || location.pathname.startsWith('/onemod/') ? '/onemod' : '';
+const STATIC_PAGES = location.hostname.endsWith('.github.io');
 const RPC = localStorage.getItem('onemod_rpc') || 'https://rpc.solanatracker.io/public';
 const connection = new Connection(RPC, 'confirmed');
 const pump = new PumpSdk();
@@ -54,6 +55,7 @@ const readDataUrl = file => new Promise((resolve, reject) => {
 async function metadataUri(form) {
   const existing = form.uri.value.trim();
   if (existing) return existing;
+  if (STATIC_PAGES) throw new Error('Add a permanent metadata URI. Image hosting is available when the Onemod server is deployed.');
   const file = form.image.files[0];
   if (!file) throw new Error('Add a token image or provide an existing metadata URI.');
   if (file.size > 2_000_000) throw new Error('Token image must be 2 MB or smaller.');
