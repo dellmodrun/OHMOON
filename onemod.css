@@ -1,0 +1,43 @@
+:root{
+  --bg:#faf8ee!important;--panel:#f4f0e2!important;--card:#fffaf0!important;
+  --card-2:#f0ead7!important;--card-3:#e6ddc5!important;
+  --line:#d8cfb8!important;--line-2:#b9af96!important;
+  --text:#20231f!important;--white:#fffdf6!important;--pale:#302f29!important;
+  --soft:#625f54!important;--muted:#777367!important;--faint:#9a9483!important;
+  --green:#2ca985!important;--green-hi:#45d0a8!important;--green-dk:#17644f!important;
+  --yellow:#d39b45!important;--yellow-dk:#8e6428!important;
+  --up:#208a6c!important;--red:#c96050!important;--fire:#d68938!important;--fire-hi:#edb56e!important;
+  --ink:#151815!important;--ink-deep:#123e33!important;
+}
+html,body{background:#faf8ee!important;color:#20231f!important}
+html:not(.onemod-ready) body{visibility:hidden!important}
+body{background-image:radial-gradient(circle at 72% 10%,rgba(44,169,133,.10),transparent 28%),linear-gradient(rgba(23,100,79,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(23,100,79,.035) 1px,transparent 1px)!important;background-size:auto,42px 42px,42px 42px!important}
+.side,.topnav,.mobilebar{background:rgba(250,248,238,.93)!important;border-color:#d8cfb8!important;backdrop-filter:blur(18px)}
+.brand,.tn-brand{color:#20231f!important;letter-spacing:-.04em}
+.brand .mark,.brand-m .mark,.tn-brand .mark{width:34px!important;height:34px!important;object-fit:contain!important;border-radius:7px!important}
+.brand,.tn-brand{gap:9px!important;align-items:center!important}
+.onemod-word{font-family:var(--mono)!important;font-size:18px!important;font-weight:900!important;line-height:1!important;letter-spacing:.08em!important;text-transform:uppercase!important;color:#20231f!important}
+@media(max-width:720px){.onemod-word{font-size:14px!important}.brand .mark,.brand-m .mark,.tn-brand .mark{width:30px!important;height:30px!important}}
+.btn,.sidelink.on,.tabs button.on,.so-tabs button.on,.pp-chip.on{background:#2ca985!important;color:#fffdf6!important;border-color:#17644f!important;box-shadow:0 0 0 1px rgba(44,169,133,.08),0 8px 26px rgba(23,100,79,.12)!important}
+.btn-ghost,.wchip-cta{background:#fffaf0!important;color:#20231f!important;border-color:#b9af96!important;box-shadow:none!important}
+.btn:hover{background:#17644f!important;border-color:#17644f!important;color:#fffdf6!important}
+.card,.ccard,.tile,.lc-card,.so-call,.calls-grid>*,.rule-demo,.lp-preview{background-color:#fffaf0!important;border-color:#d8cfb8!important}
+.ccard:hover,.tile:hover,.so-call:hover{border-color:#2ca985!important;box-shadow:0 18px 46px rgba(63,52,31,.12),0 0 0 1px rgba(44,169,133,.12)!important}
+.hero h1,.how h1,.lc-title,.calls-head h1,.burns-head h1,.lp-title{color:#20231f!important}
+.hero h1 .h-pop,.hero h1 .h-white,.pos,.chg-up,.lc-stat b,.rule-num{color:#17644f!important}
+.h-squiggle path,.spark-up path{stroke:#2ca985!important}
+.sticker,.hp-ticket,.lbox,.pp-chip{background:#f0ead7!important;border-color:#b9af96!important;color:#302f29!important}
+.hp-say,.lart-bubble{background:#20231f!important;color:#faf8ee!important;border-color:#20231f!important}
+.hp-mascot,.lart-img{object-fit:contain!important;filter:drop-shadow(0 24px 25px rgba(0,0,0,.4))!important}
+.hp-mascot{transform:scale(1.18)!important}
+.hp-stage .hp-coin{display:none!important}
+.hp-shadow{background:radial-gradient(ellipse,rgba(44,169,133,.22),transparent 70%)!important}
+.pb-fill,.lc-fill{background:linear-gradient(90deg,#17644f,#45d0a8)!important}
+.fire,.burns-tot,.feebar{border-color:#b9af96!important}
+.fire{color:#d68938!important}
+input,textarea,select{background:#fffdf6!important;color:#20231f!important;border-color:#b9af96!important}
+input:focus,textarea:focus,select:focus{border-color:#2ca985!important;box-shadow:0 0 0 3px rgba(44,169,133,.12)!important}
+.onemod-kicker{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid #9dcfbe;border-radius:999px;background:#e9f5ef;color:#17644f;font:700 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.onemod-kicker:before{content:"";width:7px;height:7px;border-radius:50%;background:#2ca985;box-shadow:0 0 10px rgba(44,169,133,.5)}
+.hero h1 .h-word{animation:none!important;transform:none!important;opacity:1!important;transition:none!important}
+@media(max-width:720px){.brand .mark,.brand-m .mark{width:27px!important;height:27px!important}.hp-mascot{transform:scale(1.05)!important}}

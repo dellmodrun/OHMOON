@@ -1,0 +1,9 @@
+{
+  "name": "onemod",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A modular genesis layer for tokens launching into Pump.fun.",
+  "scripts": {
+    "start": "node server.cjs"
+  }
+}
