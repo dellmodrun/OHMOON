@@ -1,16 +1,17 @@
-(() => {
+﻿(() => {
   const root = document.querySelector('[data-project]'), canvas = document.querySelector('#pd-chart');
   if (!root || !canvas) return;
   const BASE = location.pathname.startsWith('/onemod') ? '/onemod' : '';
   const params = new URLSearchParams(location.search);
   const mint = params.get('mint') || root.dataset.mint || '';
+  if (!mint) { location.replace(`${BASE}/`); return; }
   let token = null;
-  try { token = JSON.parse(localStorage.getItem('onemod-live-projects-v1') || '[]').find(item => item.mint === mint) || null; } catch {}
+  try { token = JSON.parse(localStorage.getItem('onemod-live-projects-v2') || localStorage.getItem('onemod-live-projects-v1') || '[]').find(item => item.mint === mint) || null; } catch {}
   let ticker = token?.symbol || root.dataset.ticker || 'TOKEN';
   let side = 'buy', period = '5m', trades = [];
   const periodMs = { '1m':60000, '5m':300000, '15m':900000, '1h':3600000, '4h':14400000 };
   const fmt = value => Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 6 });
-  const short = value => value ? `${value.slice(0,4)}?${value.slice(-4)}` : '?';
+  const short = value => value ? `${value.slice(0,4)}...${value.slice(-4)}` : 'unknown';
 
   function hydrateIdentity() {
     if (!mint) return;
@@ -19,11 +20,11 @@
     const title = document.querySelector('.pd-id h1'); if (title) title.innerHTML = `${name} <span class="pd-up">$${ticker}</span>`;
     const desc = document.querySelector('.pd-id p'); if (desc) desc.textContent = token?.description || `Live Pump.fun market ${mint}`;
     const profile = document.querySelector('.pd-profile p'); if (profile) profile.textContent = token?.description || `Live Pump.fun market ${mint}`;
-    const art = document.querySelector('.pd-coin-mark img'); if (art && token?.image) art.src = token.image;
+    const art = document.querySelector('.pd-coin-mark img'); if (art) art.src = token?.image || `${BASE}/assets/onemod-logo-transparent.png`;
     const cap = document.querySelector('.pd-head-price b'); if (cap) cap.textContent = token?.marketCapSol ? `${Number(token.marketCapSol).toFixed(2)} SOL` : 'live';
-    const change = document.querySelector('.pd-head-price div'); if (change) change.textContent = 'LIVE · Pump.fun';
+    const change = document.querySelector('.pd-head-price div'); if (change) change.textContent = 'LIVE | Pump.fun';
     const pair = document.querySelector('.pd-chart-card h2'); if (pair) pair.textContent = `$${ticker} / SOL`;
-    document.querySelectorAll('.pd-stat b').forEach((node, i) => { node.textContent = i === 0 && token?.marketCapSol ? `${Number(token.marketCapSol).toFixed(2)} SOL` : i === 3 && token ? `${Math.max(1, Math.round(((Number(token.vSolInBondingCurve || 30)-30)/55)*100))}%` : '?'; });
+    document.querySelectorAll('.pd-stat b').forEach((node, i) => { node.textContent = i === 0 && token?.marketCapSol ? `${Number(token.marketCapSol).toFixed(2)} SOL` : i === 3 && token ? `${Math.max(1, Math.round(((Number(token.vSolInBondingCurve || 30)-30)/55)*100))}%` : 'pending'; });
     document.querySelector('.pd-table tbody')?.replaceChildren();
     const owner = document.querySelector('.pd-profile-row:last-child b'); if (owner) owner.textContent = short(token?.traderPublicKey);
   }
@@ -61,9 +62,31 @@
 
   document.querySelectorAll('.pd-periods button').forEach(btn=>btn.addEventListener('click',()=>{period=btn.dataset.period;document.querySelectorAll('.pd-periods button').forEach(x=>x.classList.toggle('on',x===btn));draw()}));
   const amount=document.querySelector('.pd-amount input'),unit=document.querySelector('.pd-amount b'),wallet=document.querySelector('.pd-wallet'),note=document.querySelector('.pd-trade-note');
-  function updateTradeButton(){if(!mint){wallet.textContent='Market not linked';wallet.disabled=true;return}wallet.disabled=false;wallet.textContent=window.OnemodWallet?.state.address?`${side==='buy'?'Buy':'Sell'} $${ticker}`:'Connect wallet';}
-  document.querySelectorAll('.pd-tabs button').forEach(btn=>btn.addEventListener('click',()=>{side=btn.dataset.side;document.querySelectorAll('.pd-tabs button').forEach(x=>x.classList.toggle('on',x===btn));unit.textContent=side==='buy'?'SOL':'%';amount.placeholder=side==='buy'?'0.00':'0?100';document.querySelectorAll('.pd-quick button').forEach((x,i)=>{const values=side==='buy'?['0.1','0.5','1','2']:['25','50','75','100'];x.dataset.amount=values[i];x.textContent=values[i]+(side==='sell'?'%':i===3?' SOL':'')});updateTradeButton()}));
+  const settings=document.createElement('div'); settings.className='pd-trade-settings'; settings.innerHTML='<label>slippage <span><input name="slippage" type="number" min="1" max="50" step="1" value="10">%</span></label><label>priority fee <span><input name="priorityFee" type="number" min="0" step="0.00001" value="0.00005">SOL</span></label>';
+  document.querySelector('.pd-quick')?.after(settings);
+  const slippage=settings.querySelector('[name="slippage"]'),priorityFee=settings.querySelector('[name="priorityFee"]');
+  const balanceNode=document.querySelector('.pd-balance span:last-child');
+  function updateTradeButton(){
+    const walletState=window.OnemodWallet?.state;
+    if(balanceNode) balanceNode.textContent=walletState?.address ? `balance ${walletState.balance == null ? 'loading' : walletState.balance.toFixed(4)} SOL` : 'wallet not connected';
+    if(!mint){wallet.textContent='Market not linked';wallet.disabled=true;return;}
+    wallet.disabled=false;wallet.textContent=walletState?.address?`${side==='buy'?'Buy':'Sell'} $${ticker}`:'Connect wallet';
+  }
+  document.querySelectorAll('.pd-tabs button').forEach(btn=>btn.addEventListener('click',()=>{side=btn.dataset.side;document.querySelectorAll('.pd-tabs button').forEach(x=>x.classList.toggle('on',x===btn));unit.textContent=side==='buy'?'SOL':'%';amount.placeholder=side==='buy'?'0.00':'0-100';document.querySelectorAll('.pd-quick button').forEach((x,i)=>{const values=side==='buy'?['0.1','0.5','1','2']:['25','50','75','100'];x.dataset.amount=values[i];x.textContent=values[i]+(side==='sell'?'%':i===3?' SOL':'')});updateTradeButton();}));
   document.querySelectorAll('.pd-quick button').forEach(btn=>btn.addEventListener('click',()=>amount.value=btn.dataset.amount));
-  wallet.addEventListener('click',async()=>{try{if(!window.OnemodWallet.state.address){await window.OnemodWallet.connect();updateTradeButton();return}wallet.disabled=true;wallet.textContent='Building transaction?';const value=amount.value;const signature=await window.OnemodWallet.trade({mint,action:side,amount:side==='sell'?`${value}%`:value,denominatedInSol:side==='buy'});note.innerHTML=`Submitted ? <a href="https://solscan.io/tx/${signature}" target="_blank" rel="noreferrer">view on Solscan</a>`;wallet.textContent='Transaction submitted';}catch(error){note.textContent=error.message||'Transaction was not submitted.';updateTradeButton()}finally{wallet.disabled=false}});
+  wallet.addEventListener('click',async()=>{
+    try{
+      if(!window.OnemodWallet.state.address){await window.OnemodWallet.connect();updateTradeButton();return;}
+      const value=Number(amount.value),slip=Number(slippage.value),fee=Number(priorityFee.value);
+      if(!(value>0)) throw new Error('Enter an amount greater than zero.');
+      if(side==='sell' && value>100) throw new Error('Sell percentage cannot exceed 100%.');
+      if(!(slip>=1&&slip<=50)) throw new Error('Slippage must be between 1% and 50%.');
+      if(!(fee>=0)) throw new Error('Priority fee cannot be negative.');
+      wallet.disabled=true;wallet.textContent='Building transaction...';
+      note.textContent=`Review: ${side.toUpperCase()} ${side==='buy'?value+' SOL':value+'%'} of $${ticker}, ${slip}% max slippage, ${fee} SOL priority fee.`;
+      const signature=await window.OnemodWallet.trade({mint,action:side,amount:side==='sell'?`${value}%`:value,denominatedInSol:side==='buy',slippage:slip,priorityFee:fee});
+      note.innerHTML=`Submitted | <a href="https://solscan.io/tx/${signature}" target="_blank" rel="noreferrer">view on Solscan</a>`;wallet.textContent='Transaction submitted';
+    }catch(error){note.textContent=error.message||'Transaction was not submitted.';updateTradeButton();}finally{wallet.disabled=false;}
+  });
   window.addEventListener('onemod:wallet',updateTradeButton); new ResizeObserver(draw).observe(canvas); hydrateIdentity();updateTradeButton();draw();stream();
 })();

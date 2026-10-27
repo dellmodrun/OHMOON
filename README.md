@@ -1,15 +1,21 @@
 # Onemod
 
-Onemod is a modular genesis layer for tokens launching into Pump.fun.
+Onemod is a live Pump.fun discovery, launch and trading interface for Solana.
 
 ## Local development
 
 ```bash
+npm install
 npm start
 ```
 
-The local app is served at `http://127.0.0.1:4184/`.
+Open `http://127.0.0.1:4184/`. The static site is published under `/onemod/` on GitHub Pages.
 
-## Status
+## Runtime integrations
 
-The current branch contains the complete Onemod interface and local asset set. Wallet connection, Pump `create_v2` integration, metadata storage and the Onemod launch ledger are being implemented next.
+- Solana Wallet Standard for wallet discovery and signing
+- PumpPortal local transaction builder for Pump.fun create, buy and sell transactions
+- PumpPortal WebSocket for live Pump.fun creation events
+- Solana JSON-RPC for balances, broadcast and confirmation
+
+Private keys never enter the application. Every transaction is reviewed and signed by the connected wallet.
