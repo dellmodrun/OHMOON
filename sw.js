@@ -1,4 +1,4 @@
-const CACHE = 'onemod-shell-v9';
+const CACHE = 'onemod-shell-v10';
 const BASE = new URL(self.registration.scope).pathname.replace(/\/$/, '');
 const SHELL = [
   '/', '/live/', '/calls/', '/burns/', '/launch/', '/how/', '/trade/',
