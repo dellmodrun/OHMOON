@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">Token image unavailable</title>
+  <desc id="desc">Neutral placeholder used when a token has no verified image.</desc>
+  <rect width="320" height="320" rx="42" fill="#f0ead7"/>
+  <path d="M80 104 160 58l80 46v112l-80 46-80-46Z" fill="#fffaf0" stroke="#20231f" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M80 104 160 150l80-46M160 150v112" fill="none" stroke="#17644f" stroke-width="10" stroke-linejoin="round"/>
+  <circle cx="160" cy="150" r="18" fill="#2ca985" stroke="#20231f" stroke-width="8"/>
+  <path d="M132 206h56" stroke="#20231f" stroke-width="10" stroke-linecap="round"/>
+  <text x="160" y="296" fill="#625f54" font-family="monospace" font-size="15" font-weight="700" letter-spacing="2" text-anchor="middle">IMAGE PENDING</text>
+</svg>
