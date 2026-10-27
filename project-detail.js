@@ -27,6 +27,8 @@
     document.querySelectorAll('.pd-stat b').forEach((node, i) => { node.textContent = i === 0 && token?.marketCapSol ? `${Number(token.marketCapSol).toFixed(2)} SOL` : i === 3 && token ? `${Math.max(1, Math.round(((Number(token.vSolInBondingCurve || 30)-30)/55)*100))}%` : 'pending'; });
     document.querySelector('.pd-table tbody')?.replaceChildren();
     const owner = document.querySelector('.pd-profile-row:last-child b'); if (owner) owner.textContent = short(token?.traderPublicKey);
+    const tags = document.querySelector('.pd-tags');
+    if (tags && !tags.querySelector('.pd-market-link')) { const link = document.createElement('a'); link.className = 'pd-tag pd-market-link'; link.href = `https://pump.fun/coin/${mint}`; link.target = '_blank'; link.rel = 'noreferrer'; link.textContent = 'open on Pump.fun'; tags.appendChild(link); }
   }
 
   function candles() {
@@ -54,10 +56,36 @@
     const cap=document.querySelector('.pd-head-price b'); if(cap&&event.marketCapSol)cap.textContent=`${Number(event.marketCapSol).toFixed(2)} SOL`;
   }
 
-  function stream() {
-    if(!mint)return; const socket=new WebSocket('wss://pumpportal.fun/api/data');
-    socket.onopen=()=>socket.send(JSON.stringify({method:'subscribeTokenTrade',keys:[mint]}));
-    socket.onmessage=message=>{try{addTrade(JSON.parse(message.data))}catch{}}; socket.onerror=()=>socket.close(); socket.onclose=()=>setTimeout(stream,3000);
+  function curveStream(endpointIndex = 0) {
+    const endpoints = ['wss://api.mainnet-beta.solana.com', 'wss://solana-rpc.publicnode.com'];
+    let curve, socket, previous = null, intentional = false;
+    try {
+      const program = new solanaWeb3.PublicKey('6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P');
+      [curve] = solanaWeb3.PublicKey.findProgramAddressSync([new TextEncoder().encode('bonding-curve'), new solanaWeb3.PublicKey(mint).toBytes()], program);
+      socket = new WebSocket(endpoints[endpointIndex % endpoints.length]);
+    } catch { return; }
+    const readU64 = (view, offset) => view.getBigUint64(offset, true);
+    const handleEncoded = encoded => {
+      if (!encoded) return;
+      const binary = atob(encoded), bytes = Uint8Array.from(binary, char => char.charCodeAt(0)); if (bytes.length < 49) return;
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength), current = { vToken:readU64(view,8), vSol:readU64(view,16), realToken:readU64(view,24), realSol:readU64(view,32), supply:readU64(view,40), complete:Boolean(bytes[48]) };
+      const price = Number(current.vSol) / Number(current.vToken) * 0.001;
+      if (!previous) { trades.push({ timestamp:Date.now(), price, solAmount:0, tokenAmount:0 }); draw(); }
+      else if (current.vSol !== previous.vSol) {
+        const buying = current.vSol > previous.vSol, solAmount = Math.abs(Number(current.realSol - previous.realSol)) / 1e9, tokenAmount = Math.abs(Number(current.realToken - previous.realToken)) / 1e6;
+        addTrade({ mint, txType:buying?'buy':'sell', solAmount, tokenAmount, price, marketCapSol:price * Number(current.supply) / 1e6, traderPublicKey:'' });
+      }
+      previous = current;
+      const streamTag = document.querySelector('.pd-table .pd-tag'); if (streamTag) streamTag.textContent = current.complete ? 'curve migrated' : 'on-chain curve';
+    };
+    socket.onopen = async () => {
+      socket.send(JSON.stringify({ jsonrpc:'2.0', id:1, method:'accountSubscribe', params:[curve.toBase58(), { encoding:'base64', commitment:'confirmed' }] }));
+      try { const result = await OnemodWallet.rpc('getAccountInfo', [curve.toBase58(), { encoding:'base64', commitment:'confirmed' }]); handleEncoded(result?.value?.data?.[0]); } catch {}
+    };
+    socket.onmessage = message => { try { handleEncoded(JSON.parse(message.data)?.params?.result?.value?.data?.[0]); } catch {} };
+    socket.onerror = () => socket.close();
+    socket.onclose = () => { if (!intentional) setTimeout(() => curveStream(endpointIndex + 1), 2500); };
+    window.addEventListener('beforeunload', () => { intentional = true; socket.close(); }, { once:true });
   }
 
   document.querySelectorAll('.pd-periods button').forEach(btn=>btn.addEventListener('click',()=>{period=btn.dataset.period;document.querySelectorAll('.pd-periods button').forEach(x=>x.classList.toggle('on',x===btn));draw()}));
@@ -88,5 +116,5 @@
       note.innerHTML=`Submitted | <a href="https://solscan.io/tx/${signature}" target="_blank" rel="noreferrer">view on Solscan</a>`;wallet.textContent='Transaction submitted';
     }catch(error){note.textContent=error.message||'Transaction was not submitted.';updateTradeButton();}finally{wallet.disabled=false;}
   });
-  window.addEventListener('onemod:wallet',updateTradeButton); new ResizeObserver(draw).observe(canvas); hydrateIdentity();updateTradeButton();draw();stream();
+  window.addEventListener('onemod:wallet',updateTradeButton); new ResizeObserver(draw).observe(canvas); hydrateIdentity();updateTradeButton();draw();curveStream();
 })();
