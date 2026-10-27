@@ -9,10 +9,14 @@
   try { token = JSON.parse(localStorage.getItem('onemod-live-projects-v2') || localStorage.getItem('onemod-live-projects-v1') || '[]').find(item => item.mint === mint) || null; } catch {}
   let ticker = token?.symbol || root.dataset.ticker || 'TOKEN';
   let side = 'buy', period = '5m', trades = [], history = [], poolAddress = '', chartState = 'LOADING MARKET HISTORY';
+  let solUsd = Number(sessionStorage.getItem('onemod-sol-usd') || 0);
   const chartCache = new Map();
   const periodMs = { '1m':60000, '5m':300000, '15m':900000, '1h':3600000, '4h':14400000 };
   const fmt = value => Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 6 });
   const short = value => value ? `${value.slice(0,4)}...${value.slice(-4)}` : 'unknown';
+  const money = value => { const amount = Number(value); return Number.isFinite(amount) && amount > 0 ? amount.toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:amount >= 100 ? 0 : 2}) : 'loading'; };
+  const marketCapUsd = () => { const stored = Number(token?.marketCapUsd || 0); if (stored > 0) return stored; const curve = Number(token?.marketCapSol || 0); return curve > 0 && solUsd > 0 ? curve * solUsd : 0; };
+  const tokenImage = () => token?.localImage ? `${BASE}/${String(token.localImage).replace(/^\/+/, '')}` : token?.marketImage || token?.image || `${BASE}/assets/projects/token-placeholder.svg`;
   async function cachedJson(key,url,ttl=60000){let cached=null;try{cached=JSON.parse(localStorage.getItem(`onemod-cache:${key}`)||'null');if(cached&&Date.now()-cached.savedAt<ttl)return cached.data;}catch{}try{const response=await fetch(url,{headers:{Accept:'application/json;version=20230203'}});if(!response.ok)throw new Error(`${response.status}`);const data=await response.json();try{localStorage.setItem(`onemod-cache:${key}`,JSON.stringify({savedAt:Date.now(),data}));}catch{}return data;}catch(error){if(cached?.data)return cached.data;throw error;}}
 
   function hydrateIdentity() {
@@ -22,11 +26,11 @@
     const title = document.querySelector('.pd-id h1'); if (title) title.innerHTML = `${name} <span class="pd-up">$${ticker}</span>`;
     const desc = document.querySelector('.pd-id p'); if (desc) desc.textContent = token?.description || `Live Pump.fun market ${mint}`;
     const profile = document.querySelector('.pd-profile p'); if (profile) profile.textContent = token?.description || `Live Pump.fun market ${mint}`;
-    const art = document.querySelector('.pd-coin-mark img'); if (art) art.src = token?.image || `${BASE}/assets/onemod-logo-transparent.png`;
-    const cap = document.querySelector('.pd-head-price b'); if (cap && !poolAddress) cap.textContent = token?.marketCapSol ? `${Number(token.marketCapSol).toFixed(2)} SOL` : 'live';
+    const art = document.querySelector('.pd-coin-mark img'); if (art) { art.onerror = () => { art.onerror = null; art.src = `${BASE}/assets/projects/token-placeholder.svg`; }; art.src = tokenImage(); art.alt = `${ticker} token artwork`; }
+    const cap = document.querySelector('.pd-head-price b'); if (cap && !poolAddress) cap.textContent = money(marketCapUsd());
     const change = document.querySelector('.pd-head-price div'); if (change && !poolAddress) change.textContent = 'LIVE | Pump.fun';
     const pair = document.querySelector('.pd-chart-card h2'); if (pair) pair.textContent = `$${ticker} / SOL${poolAddress?' · GeckoTerminal':''}`;
-    if(!poolAddress)document.querySelectorAll('.pd-stat b').forEach((node, i) => { node.textContent = i === 0 && token?.marketCapSol ? `${Number(token.marketCapSol).toFixed(2)} SOL` : i === 3 && token ? `${Math.max(1, Math.round(((Number(token.vSolInBondingCurve || 30)-30)/55)*100))}%` : 'pending'; });
+    if(!poolAddress)document.querySelectorAll('.pd-stat b').forEach((node, i) => { node.textContent = i === 0 ? money(marketCapUsd()) : i === 1 && token ? money(token.volumeUsd24h) : i === 3 && token ? `${Math.max(0, Math.round(((Number(token.vSolInBondingCurve || 30)-30)/55)*100))}%` : 'pending'; });
     document.querySelector('.pd-table tbody')?.replaceChildren();
     const owner = document.querySelector('.pd-profile-row:last-child b'); if (owner) owner.textContent = short(token?.traderPublicKey);
     const tags = document.querySelector('.pd-tags');
@@ -57,7 +61,7 @@
   async function loadTokenIdentity() {
     try {
       const response = await fetch(`${BASE}/feed/live-projects.json?ts=${Math.floor(Date.now()/300000)}`); const items = response.ok ? await response.json() : [];
-      const shared = Array.isArray(items) ? items.find(item => item.mint === mint) : null; if (shared) token = { ...shared, ...(token || {}) };
+      const shared = Array.isArray(items) ? items.find(item => item.mint === mint) : null; if (shared) { token = { ...(token || {}), ...shared }; try { const saved = JSON.parse(localStorage.getItem('onemod-live-projects-v2') || '[]').filter(item => item?.mint !== mint); localStorage.setItem('onemod-live-projects-v2', JSON.stringify([token, ...saved].slice(0, 40))); } catch {} }
       hydrateIdentity();
       if (token?.uri && !token.metadataLoaded) {
         const cid = String(token.uri).match(/(?:ipfs:\/\/|\/ipfs\/)([^?#]+)/)?.[1], uri = cid ? `https://gateway.pinata.cloud/ipfs/${cid}` : token.uri;
@@ -70,14 +74,25 @@
     hydrateIdentity();
   }
 
-  const money = value => Number(value || 0).toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});
+  async function loadSolPrice() {
+    if (solUsd > 0) return solUsd;
+    try {
+      const solMint = 'So11111111111111111111111111111111111111112';
+      const response = await fetch(`https://api.geckoterminal.com/api/v2/simple/networks/solana/token_price/${solMint}`);
+      const payload = response.ok ? await response.json() : null;
+      const value = Number(payload?.data?.attributes?.token_prices?.[solMint] || 0);
+      if (value > 0) { solUsd = value; sessionStorage.setItem('onemod-sol-usd', String(value)); hydrateIdentity(); }
+    } catch {}
+    return solUsd;
+  }
   async function loadPool() {
     try {
       const payload = await cachedJson(`pools:${mint}`,`https://api.geckoterminal.com/api/v2/networks/solana/tokens/${mint}/pools`,60000), pools = payload.data || [], selected = pools.find(item => item.relationships?.dex?.data?.id === 'pump-fun') || pools[0]; if (!selected) throw new Error('market pool not indexed yet');
       poolAddress = selected.attributes.address; const market = selected.attributes;
-      const cap = document.querySelector('.pd-head-price b'); if (cap) cap.textContent = money(market.market_cap_usd || market.fdv_usd);
+      const liveCap = Number(market.market_cap_usd || market.fdv_usd || 0); if (liveCap > 0) token = { ...(token || {}), marketCapUsd:liveCap, marketSource:'market' };
+      const cap = document.querySelector('.pd-head-price b'); if (cap) cap.textContent = money(marketCapUsd());
       const change = document.querySelector('.pd-head-price div'), pct = Number(market.price_change_percentage?.h24 || 0); if (change) { change.textContent = `${pct>=0?'+':''}${pct.toFixed(2)}% · 24H`; change.className = pct >= 0 ? 'pd-up' : 'pd-down'; }
-      const stats = document.querySelectorAll('.pd-stat b'); if (stats.length) { stats[0].textContent=money(market.market_cap_usd || market.fdv_usd); stats[1].textContent=money(market.volume_usd?.h24); stats[2].textContent=token?.holderCount == null ? 'on-chain' : Number(token.holderCount).toLocaleString(); stats[3].textContent=token?.graduation != null ? `${Math.max(0,Number(token.graduation)).toFixed(1)}%` : token ? `${Math.max(0,Math.round(((Number(token.vSolInBondingCurve||30)-30)/55)*100))}%` : 'pending'; }
+      const stats = document.querySelectorAll('.pd-stat b'); if (stats.length) { stats[0].textContent=money(marketCapUsd()); stats[1].textContent=money(market.volume_usd?.h24 || token?.volumeUsd24h); stats[2].textContent=token?.holderCount == null ? 'on-chain' : Number(token.holderCount).toLocaleString(); stats[3].textContent=token?.graduation != null ? `${Math.max(0,Number(token.graduation)).toFixed(1)}%` : token ? `${Math.max(0,Math.round(((Number(token.vSolInBondingCurve||30)-30)/55)*100))}%` : 'pending'; }
       const pair = document.querySelector('.pd-chart-card h2'); if (pair) pair.textContent = `$${ticker} / SOL · GeckoTerminal`;
       await Promise.all([loadHistory(period), loadRecentTrades()]);
     } catch (error) { chartState = String(error.message || 'MARKET HISTORY UNAVAILABLE').toUpperCase(); draw(); }
@@ -107,7 +122,7 @@
     if (!event || event.mint !== mint || !['buy','sell'].includes(event.txType)) return;
     const sol=Number(event.solAmount||0),amount=Number(event.tokenAmount||0); trades.push({...event,timestamp:Date.now(),price:sol&&amount?sol/amount:0}); trades=trades.slice(-500); draw();
     const body=document.querySelector('.pd-table tbody'); if(body){const row=document.createElement('tr');row.innerHTML=`<td class="${event.txType==='buy'?'pd-up':'pd-down'}">${event.txType}</td><td>${fmt(sol)} SOL</td><td>${fmt(amount)} $${ticker}</td><td>now</td><td>${short(event.traderPublicKey)}</td>`;body.prepend(row);while(body.children.length>12)body.lastElementChild.remove();}
-    const cap=document.querySelector('.pd-head-price b'); if(cap&&event.marketCapSol)cap.textContent=`${Number(event.marketCapSol).toFixed(2)} SOL`;
+    if(event.marketCapSol) { token = { ...(token || {}), marketCapSol:Number(event.marketCapSol), marketCapUsd:solUsd > 0 ? Number(event.marketCapSol) * solUsd : token?.marketCapUsd }; const cap=document.querySelector('.pd-head-price b'); if(cap)cap.textContent=money(marketCapUsd()); const stat=document.querySelector('.pd-stat b'); if(stat)stat.textContent=money(marketCapUsd()); }
   }
 
   function curveStream(endpointIndex = 0) {
@@ -170,5 +185,5 @@
       note.innerHTML=`Submitted | <a href="https://solscan.io/tx/${signature}" target="_blank" rel="noreferrer">view on Solscan</a>`;wallet.textContent='Transaction submitted';
     }catch(error){note.textContent=error.message||'Transaction was not submitted.';updateTradeButton();}finally{wallet.disabled=false;}
   });
-  window.addEventListener('onemod:wallet',updateTradeButton); new ResizeObserver(draw).observe(canvas); hydrateIdentity();updateTradeButton();draw();loadTokenIdentity();loadPool();curveStream();
+  window.addEventListener('onemod:wallet',updateTradeButton); new ResizeObserver(draw).observe(canvas); hydrateIdentity();updateTradeButton();draw();loadSolPrice();loadTokenIdentity();loadPool();curveStream();
 })();
