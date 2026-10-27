@@ -1,0 +1,11 @@
+{
+  "glb": "/mascot/launchy.glb",
+  "clips": {
+    "idle": "idle",
+    "wave": "wave",
+    "talk": "talk",
+    "think": "think",
+    "cheer": "cheer",
+    "jump": "jump"
+  }
+}
