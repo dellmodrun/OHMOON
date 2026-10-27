@@ -1,4 +1,4 @@
-const CACHE = 'onemod-shell-v1';
+const CACHE = 'onemod-shell-v2';
 const SHELL = [
   '/onemod/', '/onemod/live/', '/onemod/calls/', '/onemod/burns/', '/onemod/launch/', '/onemod/how/', '/onemod/trade/',
   '/onemod/onemod.css', '/onemod/wallet.css', '/onemod/project-detail.css', '/onemod/onemod.js', '/onemod/wallet.js', '/onemod/live-data.js', '/onemod/project-detail.js',

@@ -42,17 +42,51 @@
     const button = [...form.querySelectorAll('button')].find(node => /connect wallet/i.test(node.textContent)); if (!button) return;
     button.type = 'button'; button.dataset.wallet = 'launch';
     const extra = document.createElement('div'); extra.className = 'om-create-fields';
-    extra.innerHTML = `<label>metadata URI <small>required | public IPFS/HTTPS JSON</small><input name="metadataUri" type="url" required placeholder="https://ipfs.io/ipfs/..."></label><div class="two"><label>initial buy <small>SOL</small><input name="initialBuy" type="number" min="0.0001" step="0.0001" value="0.01"></label><label>slippage <small>%</small><input name="slippage" type="number" min="1" max="50" step="1" value="10"></label></div><label>priority fee <small>SOL</small><input name="priorityFee" type="number" min="0" step="0.00001" value="0.00005"></label><div class="om-create-note">Onemod builds a Pump.fun transaction for the values above. Your wallet shows the final transaction before signing. Onemod never receives your private key.</div><div class="om-create-status" aria-live="polite"></div>`;
+    extra.innerHTML = `<label>project image <small>PNG, JPG, WebP or GIF | automatically optimized for permanent storage</small><input name="projectImage" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label><button class="btn btn-ghost om-upload" type="button">Upload image & build metadata</button><label>metadata URI <small>generated automatically | advanced users may also paste a public URI</small><input name="metadataUri" type="url" required placeholder="Generated after upload"></label><div class="two"><label>initial buy <small>SOL</small><input name="initialBuy" type="number" min="0.0001" step="0.0001" value="0.01"></label><label>slippage <small>%</small><input name="slippage" type="number" min="1" max="50" step="1" value="10"></label></div><label>priority fee <small>SOL</small><input name="priorityFee" type="number" min="0" step="0.00001" value="0.00005"></label><div class="om-create-note">Images and metadata are stored permanently through AR.IO Turbo. Eligible files under 105 KiB use its free tier. Your wallet signs upload ownership and the final Pump.fun transaction; Onemod never receives your private key.</div><div class="om-create-status" aria-live="polite"></div>`;
     button.before(extra);
     const status = extra.querySelector('.om-create-status');
+    const fileInput = extra.querySelector('[name="projectImage"]'), metadataInput = extra.querySelector('[name="metadataUri"]'), uploadButton = extra.querySelector('.om-upload');
+    const loadTurbo = () => new Promise((resolve, reject) => {
+      if (window.OnemodTurbo?.TurboFactory) { resolve(window.OnemodTurbo); return; }
+      const existing = document.querySelector('script[data-onemod-turbo]'); if (existing) { existing.addEventListener('load', () => resolve(window.OnemodTurbo), { once:true }); existing.addEventListener('error', reject, { once:true }); return; }
+      const script = document.createElement('script'); script.src = `${BASE}/vendor/turbo.min.js`; script.dataset.onemodTurbo = 'true'; script.onload = () => resolve(window.OnemodTurbo); script.onerror = () => reject(new Error('Permanent storage module could not load.')); document.head.appendChild(script);
+    });
+    const optimizeImage = async file => {
+      if (!file || !file.type.startsWith('image/')) throw new Error('Choose a PNG, JPG, WebP or GIF image.');
+      if (file.size <= 100 * 1024) return file;
+      const bitmap = await createImageBitmap(file); let scale = Math.min(1, 900 / Math.max(bitmap.width, bitmap.height)), quality = .86, blob;
+      for (let pass = 0; pass < 8; pass += 1) {
+        const canvas = document.createElement('canvas'); canvas.width = Math.max(1, Math.round(bitmap.width * scale)); canvas.height = Math.max(1, Math.round(bitmap.height * scale)); canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/webp', quality)); if (blob && blob.size <= 100 * 1024) break; scale *= .78; quality = Math.max(.52, quality - .07);
+      }
+      bitmap.close?.(); if (!blob || blob.size > 105 * 1024) throw new Error('The image could not be optimized below the permanent-storage free-tier limit.');
+      return new File([blob], 'token.webp', { type:'image/webp' });
+    };
+    fileInput.addEventListener('change', () => { const file = fileInput.files?.[0], pic = $('.lp-preview .cc-pic'); if (file && pic) { const url = URL.createObjectURL(file); if (pic.tagName === 'IMG') pic.src = url; else { pic.style.backgroundImage = `url("${url}")`; pic.style.backgroundSize = 'cover'; pic.style.backgroundPosition = 'center'; } } });
+    uploadButton.addEventListener('click', async () => {
+      try {
+        if (!name?.value.trim() || !ticker?.value.trim()) throw new Error('Enter the project name and ticker first.');
+        const source = fileInput.files?.[0]; if (!source) throw new Error('Choose a project image first.');
+        uploadButton.disabled = true; uploadButton.textContent = 'Preparing image...'; status.textContent = ''; status.classList.remove('error');
+        await window.OnemodWallet.connect(); const file = await optimizeImage(source); uploadButton.textContent = 'Signing permanent upload...';
+        const { TurboFactory } = await loadTurbo();
+        const turbo = await TurboFactory.authenticated({ token:'solana', walletAdapter:{ publicKey:new solanaWeb3.PublicKey(window.OnemodWallet.state.address), signMessage:message => window.OnemodWallet.signMessage(message) } });
+        const imageResult = await turbo.upload({ data:file, dataItemOpts:{ tags:[{name:'Content-Type',value:file.type},{name:'App-Name',value:'Onemod'}] } });
+        const imageUrl = `https://turbo-gateway.com/${imageResult.id}`;
+        const metadata = JSON.stringify({ name:name.value.trim(), symbol:ticker.value.trim().replace(/^\$/, '').toUpperCase(), description:brief?.value.trim() || '', image:imageUrl, showName:true, twitter:x?.value.trim() || '', telegram:telegram?.value.trim() || '', website:website?.value.trim() || '' });
+        const metadataResult = await turbo.upload({ data:metadata, dataItemOpts:{ tags:[{name:'Content-Type',value:'application/json'},{name:'App-Name',value:'Onemod'}] } });
+        metadataInput.value = `https://turbo-gateway.com/${metadataResult.id}`; status.textContent = 'Image and metadata uploaded permanently. Review the values, then create the token.'; uploadButton.textContent = 'Metadata ready';
+      } catch (error) { status.textContent = error.message || 'Metadata upload failed.'; status.classList.add('error'); uploadButton.textContent = 'Upload image & build metadata'; }
+      finally { uploadButton.disabled = false; }
+    });
     const setButton = () => { button.textContent = window.OnemodWallet?.state.address ? 'Review & create on Pump.fun' : 'Connect wallet'; };
     window.addEventListener('onemod:wallet', setButton); setButton();
     button.addEventListener('click', async event => {
       event.preventDefault();
       try {
         if (!window.OnemodWallet.state.address) { await window.OnemodWallet.connect(); setButton(); return; }
-        button.disabled = true; button.textContent = 'Building transaction...'; status.textContent = '';
-        const result = await window.OnemodWallet.createCoin({ name: name?.value, symbol: ticker?.value, uri: extra.querySelector('[name="metadataUri"]').value.trim(), initialBuy: extra.querySelector('[name="initialBuy"]').value, slippage: Number(extra.querySelector('[name="slippage"]').value), priorityFee: Number(extra.querySelector('[name="priorityFee"]').value) });
+        button.disabled = true; button.textContent = 'Building transaction...'; status.textContent = ''; status.classList.remove('error');
+        const result = await window.OnemodWallet.createCoin({ name: name?.value, symbol: ticker?.value, uri: metadataInput.value.trim(), initialBuy: extra.querySelector('[name="initialBuy"]').value, slippage: Number(extra.querySelector('[name="slippage"]').value), priorityFee: Number(extra.querySelector('[name="priorityFee"]').value) });
         status.innerHTML = `Submitted | <a href="https://solscan.io/tx/${result.signature}" target="_blank" rel="noreferrer">view transaction</a> | mint <a href="${BASE}/trade/?mint=${result.mint}">${result.mint.slice(0, 6)}...${result.mint.slice(-6)}</a>`;
         button.textContent = 'Transaction submitted';
       } catch (error) { status.textContent = error.message || 'The transaction was not submitted.'; status.classList.add('error'); setButton(); }

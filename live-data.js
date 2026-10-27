@@ -43,7 +43,7 @@
     const board = document.querySelector('.boardsec');
     if (board) {
       let state = board.querySelector('.om-live-state'); if (!state) { state = document.createElement('span'); state.className = 'om-live-state'; board.querySelector('.board-head')?.appendChild(state); }
-      state.textContent = tokens.length ? `? LIVE | ${tokens.length} RECENT PUMP.FUN LAUNCHES` : '? CONNECTING TO PUMP.FUN LIVE FEED';
+      state.textContent = tokens.length ? `● LIVE | ${tokens.length} RECENT PUMP.FUN LAUNCHES` : '● CONNECTING TO PUMP.FUN LIVE FEED';
     }
     const spot = document.querySelector('.lc-spot'), first = list[0];
     if (spot) { spot.hidden = !first; spot.style.display = first ? '' : 'none'; if (first) { spot.querySelector('img').src = image(first, 0); spot.querySelector('.lc-spot-tick').textContent = `$${safe(first.symbol, 'TOKEN')}`; spot.querySelector('.lc-spot-name').textContent = safe(first.name, 'Untitled'); spot.querySelector('.lc-spot-foot b').textContent = `${Number(first.marketCapSol || 0).toFixed(2)} SOL`; spot.querySelector('.lc-spot-cta a').href = href(first); } }
@@ -78,6 +78,11 @@
   });
   document.querySelectorAll('.search input').forEach(input => input.addEventListener('input', () => { query = input.value.trim().toLowerCase(); render(); }));
   render(); tokens.forEach(hydrate);
+  fetch(`${BASE}/feed/live-projects.json?ts=${Math.floor(Date.now() / 300000)}`).then(response => response.ok ? response.json() : []).then(items => {
+    if (!Array.isArray(items)) return;
+    tokens = [...tokens, ...items].filter((item, index, all) => item?.mint && all.findIndex(other => other.mint === item.mint) === index).sort((a, b) => Number(b.seenAt || 0) - Number(a.seenAt || 0)).slice(0, 40);
+    localStorage.setItem(KEY, JSON.stringify(tokens)); render(); tokens.forEach(hydrate);
+  }).catch(() => {});
   let retry = 1000;
   function open() { const socket = new WebSocket('wss://pumpportal.fun/api/data'); socket.onopen = () => { retry = 1000; socket.send(JSON.stringify({ method: 'subscribeNewToken' })); }; socket.onmessage = message => { try { add(JSON.parse(message.data)); } catch {} }; socket.onclose = () => { setTimeout(open, retry); retry = Math.min(retry * 2, 30000); }; socket.onerror = () => socket.close(); }
   open(); setInterval(render, 10000);

@@ -1,0 +1,38 @@
+[
+  {
+    "signature": "5PRBCEhoMRtg78uKo27CdgtdNUkR4uy1AuTF5yfhmVPRbWpTtweiNsHZTqkARVyJq6jrVRufb9X69rmLwDX23NTB",
+    "mint": "iNUKuxsdoNyznJZRfwMCwGfZj17EQyBayDpbGeeCbau",
+    "traderPublicKey": "GVCseToGxqhtdSFmRRH5HG1hz1Cm6haFCXWcpg45xA2n",
+    "txType": "create",
+    "initialBuy": 66285714.223523,
+    "solAmount": 1.97530864,
+    "bondingCurveKey": "HjWRT81dM736GAtNVajx6cLWWb5WroUGp8FCiSHGiqSw",
+    "vTokensInBondingCurve": 1006714285.776477,
+    "vSolInBondingCurve": 31.975308639999987,
+    "marketCapSol": 31.762049165059267,
+    "name": "Inscribed Number Unit",
+    "symbol": "INU",
+    "uri": "https://meta.uxento.io/data/f2230cd3-d861-403e-a4cb-d32bf9d1ce8c",
+    "is_mayhem_mode": false,
+    "pool": "pump",
+    "seenAt": 1793075544202
+  },
+  {
+    "signature": "spvs7e4EpxK1qNqsxNZRHZB9ksYACzFUx2Hsd5qYnbgbowgCMvv9gb8VGeqzqNYbgLzf1tawW5jR43BjXLnnReF",
+    "mint": "G2fw7Rt3kCCZJZCxMYT361JeFe4XAnkdNrYsWBnJpump",
+    "traderPublicKey": "Bp56WqwEFsmT3wMpYMJCahw31ZVthD6cz4uy8EUyfdcX",
+    "txType": "create",
+    "initialBuy": 10493887.4851,
+    "solAmount": 0.296296295,
+    "bondingCurveKey": "8ybM8TR6Q1PKuqeAFeetZghN2xgzE63TPEuqjgnzMEQw",
+    "vTokensInBondingCurve": 1062506112.5149,
+    "vSolInBondingCurve": 30.296296294999983,
+    "marketCapSol": 28.513997179075172,
+    "name": "cornell",
+    "symbol": "Cornell",
+    "uri": "https://ipfs.io/ipfs/bafkreiemmqvgznnqtaqtm5hz6jymsonz7hqgh7ebbzy7y4fdcoqjs6vek4",
+    "is_mayhem_mode": true,
+    "pool": "pump",
+    "seenAt": 1793075541534
+  }
+]

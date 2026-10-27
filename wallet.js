@@ -147,6 +147,21 @@
     return signature;
   }
 
+  async function signMessage(message) {
+    if (!state.provider || !state.address) await connect();
+    const bytes = message instanceof Uint8Array ? message : new TextEncoder().encode(String(message));
+    if (state.standard) {
+      const feature = state.provider.features?.['solana:signMessage'];
+      if (!feature || !state.account) throw new Error(`${state.name || 'This wallet'} does not support message signing.`);
+      const [output] = await feature.signMessage({ account: state.account, message: bytes });
+      if (!output?.signature) throw new Error('The wallet returned no message signature.');
+      return output.signature;
+    }
+    if (!state.provider.signMessage) throw new Error(`${state.name || 'This wallet'} does not support message signing.`);
+    const output = await state.provider.signMessage(bytes, 'utf8');
+    return output?.signature || output;
+  }
+
   async function buildTrade(payload) {
     const response = await fetch('https://pumpportal.fun/api/trade-local', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
     if (!response.ok) throw new Error((await response.text()) || `Transaction builder failed (${response.status})`);
@@ -179,7 +194,7 @@
     if (state.address) { accountModal(); return; }
     connect().catch(error => { if (!/cancelled/i.test(error.message)) toast(error.message, 'error'); });
   });
-  window.OnemodWallet = { state, connect, disconnect, trade, createCoin, rpc, toast, short };
+  window.OnemodWallet = { state, connect, disconnect, signMessage, trade, createCoin, rpc, toast, short };
   window.addEventListener('DOMContentLoaded', async () => {
     const remembered = localStorage.getItem('onemod-wallet');
     const match = providers().find(entry => entry.name === remembered);

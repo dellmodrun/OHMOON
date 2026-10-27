@@ -57,7 +57,7 @@
   }
 
   function curveStream(endpointIndex = 0) {
-    const endpoints = ['wss://api.mainnet-beta.solana.com', 'wss://solana-rpc.publicnode.com'];
+    const endpoints = ['wss://solana-rpc.publicnode.com', 'wss://api.mainnet-beta.solana.com'];
     let curve, socket, previous = null, intentional = false;
     try {
       const program = new solanaWeb3.PublicKey('6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P');
