@@ -6,6 +6,10 @@ const send=(res,file,type,status=200)=>{try{let data=fs.readFileSync(file);const
 http.createServer((req,res)=>{
  const u=new URL(req.url,'http://127.0.0.1:4184');
  if(u.pathname==='/onemod')u.pathname='/';else if(u.pathname.startsWith('/onemod/'))u.pathname=u.pathname.slice('/onemod'.length);
+ let localPathname=decodeURIComponent(u.pathname);let localFile=path.join(ROOT,localPathname.replace(/^\//,''));
+ if(localPathname==='/'||localPathname.endsWith('/'))localFile=path.join(localFile,'index.html');
+ else if(!path.extname(localPathname)&&fs.existsSync(path.join(localFile,'index.html')))localFile=path.join(localFile,'index.html');
+ if(fs.existsSync(localFile)&&fs.statSync(localFile).isFile())return send(res,localFile);
  const exact=map[u.pathname+u.search];if(exact)return send(res,path.join(ROOT,exact.file),exact.type,exact.status);
  if(u.searchParams.has('_rsc')){
   let candidate=Object.entries(map).find(([key])=>key.startsWith(u.pathname+'?_rsc='));
