@@ -13,6 +13,7 @@
     const favicon = document.createElement('link'); favicon.rel = 'icon'; favicon.type = 'image/png'; favicon.href = `${BASE}/assets/onemod-favicon.png?v=6`; document.head.appendChild(favicon);
     $$('.brand,.tn-brand').forEach(brand => { brand.setAttribute('aria-label', 'Onemod'); brand.innerHTML = `<img class="mark" src="${LOGO}" alt="Onemod"><span class="onemod-word">onemod</span>`; });
     $$('.xlink').forEach(link => { link.textContent = '$ONEMOD'; link.setAttribute('aria-label', '$ONEMOD'); link.href = '#'; });
+    $$('.wchip-cta,.wtab').forEach(button => { button.textContent = 'Connect wallet'; button.setAttribute('aria-label', 'Connect Solana wallet'); });
     document.documentElement.classList.add('onemod-ready');
   }
 
