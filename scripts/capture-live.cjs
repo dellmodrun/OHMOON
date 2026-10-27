@@ -1,6 +1,7 @@
 ﻿const fs = require('fs');
 const path = require('path');
 const output = path.join(__dirname, '..', 'feed', 'live-projects.json');
+const imageDir = path.join(__dirname, '..', 'feed', 'images');
 const duration = Math.max(5000, Number(process.env.CAPTURE_MS || 120000));
 let previous = [];
 try { previous = JSON.parse(fs.readFileSync(output, 'utf8')); } catch {}
@@ -31,6 +32,21 @@ async function market(items) {
     return { ...item, marketCapUsd:credible ? candidate : baseline || null, marketSource:credible ? 'market' : 'curve', volumeUsd24h:Number(pair?.volume?.h24 || 0), priceUsd:pair?.priceUsd || null, marketImage:pair?.info?.imageUrl || item.marketImage || '', marketUpdatedAt:Date.now() };
   });
 }
+async function cacheImages(items) {
+  fs.mkdirSync(imageDir, { recursive:true });
+  return Promise.all(items.map(async item => {
+    const source = item.marketImage || item.image; if (!source) return { ...item, localImage:'' };
+    const existing = fs.readdirSync(imageDir).find(name => name.startsWith(`${item.mint}.`));
+    if (existing) return { ...item, localImage:`feed/images/${existing}` };
+    try {
+      const response = await fetch(source, { signal:AbortSignal.timeout(12000) }); if (!response.ok) return { ...item, localImage:'' };
+      const data = Buffer.from(await response.arrayBuffer()); if (!data.length || data.length > 5 * 1024 * 1024) return { ...item, localImage:'' };
+      const type = String(response.headers.get('content-type') || '').toLowerCase(), ext = type.includes('png') ? 'png' : type.includes('webp') ? 'webp' : type.includes('gif') ? 'gif' : 'jpg';
+      const filename = `${item.mint}.${ext}`; fs.writeFileSync(path.join(imageDir, filename), data);
+      return { ...item, localImage:`feed/images/${filename}` };
+    } catch { return { ...item, localImage:'' }; }
+  }));
+}
 const socket = new WebSocket('wss://pumpportal.fun/api/data');
 socket.addEventListener('open', () => socket.send(JSON.stringify({ method: 'subscribeNewToken' })));
 socket.addEventListener('message', event => {
@@ -40,7 +56,7 @@ socket.addEventListener('error', event => console.error('Live feed socket error'
 setTimeout(async () => {
   socket.close();
   const seen = new Set(), merged = [...incoming.reverse(), ...previous].filter(item => { if (!item?.mint) return false; const identity = `${item.traderPublicKey || ''}|${item.name || ''}|${item.symbol || ''}`.toLowerCase(); if (seen.has(item.mint) || seen.has(identity)) return false; seen.add(item.mint); seen.add(identity); return true; }).slice(0, 100);
-  const enriched = await market(await Promise.all(merged.map(metadata)));
+  const enriched = await cacheImages(await market(await Promise.all(merged.map(metadata))));
   fs.writeFileSync(output, JSON.stringify(enriched, null, 2) + '\n');
   console.log(`Saved ${enriched.length} verified Pump.fun creation events (${incoming.length} new).`);
 }, duration);

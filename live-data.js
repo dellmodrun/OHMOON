@@ -15,7 +15,7 @@
   const ticker = value => `$${safe(value, 'TOKEN').replace(/^\$+/, '')}`;
   const age = time => { const seconds = Math.max(0, Math.floor((Date.now() - Number(time || Date.now())) / 1000)); return seconds < 60 ? `${seconds}s` : seconds < 3600 ? `${Math.floor(seconds / 60)}m` : `${Math.floor(seconds / 3600)}h`; };
   const shortAddress = value => value ? `${value.slice(0, 4)}...${value.slice(-4)}` : 'unknown';
-  const image = token => token.marketImage || token.image || PLACEHOLDER;
+  const image = token => token.localImage ? `${BASE}/${String(token.localImage).replace(/^\/+/, '')}` : token.marketImage || token.image || PLACEHOLDER;
   const setImage = (node, token, alt) => {
     if (!node) return;
     if (node.tagName !== 'IMG') {

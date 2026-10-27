@@ -27,7 +27,8 @@
     "volumeUsd24h": 25.8,
     "priceUsd": "0.0000004590",
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/HuVZv8Piwq2ztWM4pg9vBn1nN5PQTL1yyo4zYWfJpump.jpg"
   },
   {
     "signature": "2orJ7qSQhtJor31g2W98xaounsZW6e2HuozMrs4RqpfQkJcmd7jXNV8inFvkedmEeppou8v8EHMV8t4gd1W4DhFF",
@@ -51,7 +52,14 @@
     "volumeUsd24h": 95.75,
     "priceUsd": "0.0000003570",
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "image": "https://gateway.pinata.cloud/ipfs/bafkreib3wea7y7yqpjcsdit44whifmsjzwwg5stc62kuslgmppxbazqxse",
+    "description": "COOOOKKKKKKK",
+    "twitter": "",
+    "website": "",
+    "platform": "",
+    "metadataLoaded": true,
+    "localImage": "feed/images/2xvtpGwDoz8c7B8uTFVjP8bE9joAaPwfSYbu2s7wpump.png"
   },
   {
     "signature": "t3nxKbtYoK5yPAKM48oAWXsWkLguDM28wNG6VDeEyFsdtb2T5Czp84YGyN9p7z8NgeKZMhptCQZmNKWaF7HuMnm",
@@ -81,7 +89,8 @@
     "volumeUsd24h": 483.24,
     "priceUsd": "0.000002793",
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/q91ejwDRMiTr4hjmKkHhC3v3HEV7PUXX2Sqvfm1pump.jpg"
   },
   {
     "signature": "DWosm7ekpFXdX7nTuRdp6m2e9BeV8pxWsBTSR5upFfCiPx2CVC1kZtKrMnhHpZy1LnaseE5RbfzCadgpxf3mfWP",
@@ -111,7 +120,8 @@
     "volumeUsd24h": 209.13,
     "priceUsd": "0.000002792",
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/7QZ9svbkckxsBws719Jhc9KL6DjtVQ2zH9Wjeac5pump.png"
   },
   {
     "signature": "3YtHzL4EBYSiYo7R4CWVShkPSW1bT8bRVvfzGpnKJL9TKTwf5xKc24G1j9L2H5AhkERf4bcpJ9N3vyY6qXTBedSh",
@@ -136,12 +146,13 @@
     "website": "https://www.gtaelon.lol",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2794.722523463681,
+    "marketCapUsd": 2792.7033125827093,
     "marketSource": "curve",
     "volumeUsd24h": 0,
     "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/AVjZnavaojPVmachnur321tEHsobZrZw6extcGVHTHPF.png"
   },
   {
     "signature": "jprup2F8kLN1iEYueSs94wK3dFXgJLBQqdED9ngdPN4FomF14SKUmHMGU1pbFj8oQFg7mEDab2K5EnipuiGZfCi",
@@ -171,7 +182,8 @@
     "volumeUsd24h": 1647.65,
     "priceUsd": "0.000002788",
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/4Ggibpi1d6FfBpMuPEZJkfvm19pzWmnvFXERZsgUSsRV.png"
   },
   {
     "signature": "2AKX9QafJFFq9r2L2ck4z9YxRkB84epnFeeTM3bAcgBRHzVieXBB38GjfypRPuhfSGbDAinJKTJBcJMuAtMZa3bk",
@@ -201,7 +213,8 @@
     "volumeUsd24h": 865.81,
     "priceUsd": "0.000000002825",
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/DSbC8FQjuro9DFaSTdJy1U9ddJsSt8f8jopHmuYWpump.jpg"
   },
   {
     "signature": "5FtNrtBd1SsB3qhNtKYFriKdKpmrkqCfjxbZF9BsCNTG6y5gQJJs18Zi9pYH9kfWPLR3qhuLLsixSo8MESirMerm",
@@ -231,7 +244,8 @@
     "volumeUsd24h": 37.39,
     "priceUsd": "0.000002003",
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/FYWWxZCRAcSTtBe1KT3hwfMWkJot88bZ1qjyrsDhpump.jpg"
   },
   {
     "signature": "2d48eBctm7nPHd8koJtDWa7pcWxZXMviEVjZfv6BAUiyu22ga555pUTfSUvKjSt964LEzRKxa5Y3JetFS8EPupaL",
@@ -261,7 +275,8 @@
     "volumeUsd24h": 1886.69,
     "priceUsd": "0.000002792",
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/FP48y3asbKBHDPMYRMohz9Z9mG1XdX1jvohg5Kfupump.png"
   },
   {
     "signature": "53Vwsj2zrV55yWCS7FCNgHYwzHwvShY66Bv2W3PghnmGgLckVfTquR7LYCwTq52bbt7pftX1WThnPpNn14hMD9A1",
@@ -285,12 +300,13 @@
     "website": "https://pootl.memetrader.fun",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2887.095330760274,
+    "marketCapUsd": 2885.0093797374698,
     "marketSource": "curve",
     "volumeUsd24h": 0,
     "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/GkPk6CpP1LunLdy2zuMjg3fUTCaqbnwcKNZxBEPQpgkZ.png"
   },
   {
     "signature": "62qiCB6W6UjFCpWJvvd3yQ7evN5WfZD4HpM1LZpvNtrc9E1t9SzWUM7um1fnzqUCEuyaTaoPKeRNmoC5JiNCjc9h",
@@ -320,7 +336,8 @@
     "volumeUsd24h": 46.99,
     "priceUsd": "0.000002792",
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/2RtQhmagLSbNY6C9txaxrSypSMgGvdWNkbeYas6Bpump.jpg"
   },
   {
     "signature": "3gYNNBgaeYxH25fLvy7yZEGjFyHY3hiiqPanVxKe6MYSnjEKTpiSB1dc5RGMb7sSSo3TFJcEG5VK2uxzEGGzua1U",
@@ -350,7 +367,8 @@
     "volumeUsd24h": 1.97,
     "priceUsd": "0.000002796",
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/A62EUr2S8N32XzghQMkfuoVUYtSymwE97DbFEopfpump.jpg"
   },
   {
     "signature": "5PRBCEhoMRtg78uKo27CdgtdNUkR4uy1AuTF5yfhmVPRbWpTtweiNsHZTqkARVyJq6jrVRufb9X69rmLwDX23NTB",
@@ -380,7 +398,8 @@
     "volumeUsd24h": 1640.05,
     "priceUsd": "0.000002796",
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/iNUKuxsdoNyznJZRfwMCwGfZj17EQyBayDpbGeeCbau.jpg"
   },
   {
     "signature": "spvs7e4EpxK1qNqsxNZRHZB9ksYACzFUx2Hsd5qYnbgbowgCMvv9gb8VGeqzqNYbgLzf1tawW5jR43BjXLnnReF",
@@ -410,6 +429,7 @@
     "volumeUsd24h": 1127.6,
     "priceUsd": "0.000003988",
     "marketImage": "",
-    "marketUpdatedAt": 1793088763553
+    "marketUpdatedAt": 1793089878641,
+    "localImage": "feed/images/G2fw7Rt3kCCZJZCxMYT361JeFe4XAnkdNrYsWBnJpump.webp"
   }
 ]

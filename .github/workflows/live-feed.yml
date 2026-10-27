@@ -30,6 +30,6 @@ jobs:
           if git diff --quiet -- feed/live-projects.json; then exit 0; fi
           git config user.name "onemod-feed"
           git config user.email "actions@users.noreply.github.com"
-          git add feed/live-projects.json
+          git add feed
           git commit -m "Update live Pump.fun feed"
           git push
