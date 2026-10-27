@@ -1,13 +1,22 @@
 (() => {
   const RPC = 'https://api.mainnet-beta.solana.com';
-  const state = { provider: null, address: '', name: '', balance: null };
+  const BASE = location.pathname === '/onemod' || location.pathname.startsWith('/onemod/') ? '/onemod' : '';
+  const ONEMOD_LOGO = `${BASE}/assets/onemod-logo-transparent.png`;
+  const state = { provider: null, account: null, standard: false, address: '', name: '', balance: null };
   const short = (value) => value ? `${value.slice(0, 4)}…${value.slice(-4)}` : '';
-  const providers = () => [
-    ['Phantom', window.phantom?.solana],
-    ['Solflare', window.solflare],
-    ['Backpack', window.backpack],
-    ['Solana wallet', window.solana]
-  ].filter((entry, index, all) => entry[1]?.connect && all.findIndex(x => x[1] === entry[1]) === index);
+  const brandIcons = {
+    Phantom: `${BASE}/assets/wallets-phantom.svg`, Solflare: `${BASE}/assets/wallets-solflare.ico`, Backpack: `${BASE}/assets/wallets-backpack.ico`,
+    'Coinbase Wallet': `${BASE}/assets/wallets-coinbase.ico`, 'Trust Wallet': `${BASE}/assets/wallets-trust.ico`
+  };
+  const providers = () => {
+    const standard = (window.OnemodWalletRegistry?.get?.() || []).filter(wallet => wallet.features?.['standard:connect'] && wallet.chains?.some(chain => String(chain).startsWith('solana:'))).map(wallet => ({ name: wallet.name, icon: wallet.icon, wallet, standard: true }));
+    const legacy = [
+      ['Phantom', window.phantom?.solana], ['Solflare', window.solflare], ['Backpack', window.backpack], ['Coinbase Wallet', window.coinbaseSolana],
+      ['Trust Wallet', window.trustwallet?.solana], ['Brave Wallet', window.braveSolana], ['Exodus', window.exodus?.solana], ['Glow', window.glowSolana],
+      ['Coin98', window.coin98?.sol], ['MathWallet', window.solana]
+    ].filter(([, provider]) => provider?.connect).map(([name, provider]) => ({ name, icon: brandIcons[name] || '', provider, standard: false }));
+    return [...standard, ...legacy].filter((entry, index, all) => all.findIndex(item => item.name.toLowerCase() === entry.name.toLowerCase()) === index);
+  };
 
   function toast(message, kind = '') {
     let node = document.querySelector('.om-toast');
@@ -37,14 +46,22 @@
     try { const result = await rpc('getBalance', [state.address, { commitment: 'confirmed' }]); state.balance = result.value / 1e9; updateButtons(); } catch {}
   }
 
-  async function useProvider(name, provider, options = {}) {
-    const result = await provider.connect(options);
-    const publicKey = result?.publicKey || provider.publicKey;
-    if (!publicKey) throw new Error('The wallet did not return a public key.');
-    state.provider = provider; state.address = publicKey.toString(); state.name = name;
-    localStorage.setItem('onemod-wallet', name);
-    provider.on?.('accountChanged', (key) => { state.address = key?.toString?.() || ''; state.balance = null; updateButtons(); readBalance(); });
-    provider.on?.('disconnect', () => { state.provider = null; state.address = ''; state.balance = null; updateButtons(); });
+  async function useProvider(entry, options = {}) {
+    let address = '', account = null;
+    if (entry.standard) {
+      const output = await entry.wallet.features['standard:connect'].connect({ silent: Boolean(options.onlyIfTrusted) });
+      account = output.accounts?.find(item => item.chains?.some(chain => String(chain).startsWith('solana:'))) || output.accounts?.[0] || entry.wallet.accounts?.[0];
+      address = account?.address || '';
+    } else {
+      const result = await entry.provider.connect(options); const publicKey = result?.publicKey || entry.provider.publicKey; address = publicKey?.toString?.() || '';
+    }
+    if (!address) throw new Error('The wallet did not return a Solana account.');
+    state.provider = entry.standard ? entry.wallet : entry.provider; state.account = account; state.standard = entry.standard; state.address = address; state.name = entry.name;
+    localStorage.setItem('onemod-wallet', entry.name);
+    if (!entry.standard) {
+      entry.provider.on?.('accountChanged', (key) => { state.address = key?.toString?.() || ''; state.balance = null; updateButtons(); readBalance(); });
+      entry.provider.on?.('disconnect', () => { state.provider = null; state.account = null; state.address = ''; state.balance = null; updateButtons(); });
+    }
     updateButtons(); readBalance();
     return state;
   }
@@ -54,14 +71,18 @@
       document.querySelector('.om-wallet-modal')?.remove();
       const found = providers();
       const wrap = document.createElement('div'); wrap.className = 'om-wallet-modal';
-      wrap.innerHTML = `<button class="om-wallet-backdrop" aria-label="Close wallet selector"></button><section class="om-wallet-sheet" role="dialog" aria-modal="true" aria-label="Choose a Solana wallet"><header><div><small>SOLANA WALLET</small><h2>Connect to Onemod</h2></div><button class="om-wallet-close" aria-label="Close">×</button></header><p>Your wallet keeps custody. Onemod only requests transactions for you to review and sign.</p><div class="om-wallet-list">${found.map(([name], i) => `<button data-provider="${i}"><span>${name.slice(0, 1)}</span><b>${name}</b><em>detected</em></button>`).join('') || '<div class="om-wallet-empty">No compatible wallet was detected.</div>'}</div><div class="om-wallet-install"><a href="https://phantom.com/download" target="_blank" rel="noreferrer">Phantom</a><a href="https://www.solflare.com/download" target="_blank" rel="noreferrer">Solflare</a><a href="https://backpack.app/download" target="_blank" rel="noreferrer">Backpack</a></div></section>`;
+      const installs = [
+        ['Phantom', brandIcons.Phantom, 'https://phantom.com/download'], ['Solflare', brandIcons.Solflare, 'https://www.solflare.com/download'], ['Backpack', brandIcons.Backpack, 'https://backpack.app/download'],
+        ['Coinbase Wallet', brandIcons['Coinbase Wallet'], 'https://www.coinbase.com/wallet/downloads'], ['Trust Wallet', brandIcons['Trust Wallet'], 'https://trustwallet.com/download']
+      ];
+      wrap.innerHTML = `<button class="om-wallet-backdrop" aria-label="Close wallet selector"></button><section class="om-wallet-sheet" role="dialog" aria-modal="true" aria-label="Choose a Solana wallet"><header><div><small>SOLANA WALLET STANDARD</small><h2>Connect to Onemod</h2></div><button class="om-wallet-close" aria-label="Close">×</button></header><p>Your compatible Solana wallets are detected automatically. Your wallet keeps custody and approves every transaction.</p><div class="om-wallet-list">${found.map((entry, i) => `<button data-provider="${i}"><img src="${entry.icon || brandIcons[entry.name] || ONEMOD_LOGO}" alt=""><b>${entry.name}</b><em>detected</em></button>`).join('') || '<div class="om-wallet-empty">No compatible wallet was detected in this browser.</div>'}</div><div class="om-wallet-more"><small>POPULAR WALLETS</small>${installs.map(([name, icon, url]) => `<a href="${url}" target="_blank" rel="noreferrer"><img src="${icon}" alt=""><span>${name}</span><em>install ↗</em></a>`).join('')}</div></section>`;
       document.body.appendChild(wrap);
       const close = () => { wrap.remove(); reject(new Error('Wallet selection cancelled.')); };
       wrap.querySelector('.om-wallet-backdrop').onclick = close; wrap.querySelector('.om-wallet-close').onclick = close;
       wrap.querySelectorAll('[data-provider]').forEach(button => button.onclick = async () => {
-        const [name, provider] = found[Number(button.dataset.provider)];
+        const entry = found[Number(button.dataset.provider)];
         button.disabled = true; button.querySelector('em').textContent = 'opening…';
-        try { const result = await useProvider(name, provider); wrap.remove(); resolve(result); }
+        try { const result = await useProvider(entry); wrap.remove(); resolve(result); }
         catch (error) { button.disabled = false; button.querySelector('em').textContent = 'try again'; toast(error.message || 'Wallet connection was rejected.', 'error'); }
       });
     });
@@ -74,9 +95,16 @@
 
   async function signAndSend(transaction) {
     if (!state.provider || !state.address) await connect();
-    if (!state.provider.signTransaction) throw new Error(`${state.name || 'This wallet'} does not support transaction signing.`);
-    const signed = await state.provider.signTransaction(transaction);
-    const bytes = signed.serialize();
+    let bytes;
+    if (state.standard) {
+      const feature = state.provider.features?.['solana:signTransaction'];
+      if (!feature || !state.account) throw new Error(`${state.name || 'This wallet'} does not support Solana transaction signing.`);
+      const [output] = await feature.signTransaction({ account: state.account, transaction: transaction.serialize(), chain: 'solana:mainnet' });
+      bytes = output.signedTransaction;
+    } else {
+      if (!state.provider.signTransaction) throw new Error(`${state.name || 'This wallet'} does not support transaction signing.`);
+      const signed = await state.provider.signTransaction(transaction); bytes = signed.serialize();
+    }
     let binary = ''; for (let i = 0; i < bytes.length; i += 1) binary += String.fromCharCode(bytes[i]);
     const signature = await rpc('sendTransaction', [btoa(binary), { encoding: 'base64', skipPreflight: false, preflightCommitment: 'confirmed', maxRetries: 3 }]);
     toast('Transaction submitted. Waiting for confirmation…');
@@ -116,8 +144,8 @@
   window.OnemodWallet = { state, connect, trade, createCoin, rpc, toast, short };
   window.addEventListener('DOMContentLoaded', async () => {
     const remembered = localStorage.getItem('onemod-wallet');
-    const match = providers().find(([name]) => name === remembered);
-    if (match) { try { await useProvider(match[0], match[1], { onlyIfTrusted: true }); } catch {} }
+    const match = providers().find(entry => entry.name === remembered);
+    if (match) { try { await useProvider(match, { onlyIfTrusted: true }); } catch {} }
     updateButtons();
   }, { once: true });
 })();
