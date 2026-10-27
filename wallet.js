@@ -1,5 +1,5 @@
 (() => {
-  const RPC_ENDPOINTS = ['https://api.mainnet-beta.solana.com', 'https://solana-rpc.publicnode.com'];
+  const RPC_ENDPOINTS = ['https://solana-rpc.publicnode.com', 'https://api.mainnet-beta.solana.com'];
   const BASE = location.pathname === '/onemod' || location.pathname.startsWith('/onemod/') ? '/onemod' : '';
   const ONEMOD_LOGO = `${BASE}/assets/onemod-logo-transparent.png`;
   const state = { provider: null, account: null, standard: false, address: '', name: '', balance: null };
