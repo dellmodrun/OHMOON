@@ -22,6 +22,11 @@
   function renderCards(list) {
     document.querySelectorAll('.boardsec .ccard').forEach((card, index) => {
       const token = list[index]; card.hidden = !token; card.style.display = token ? '' : 'none'; if (!token) return;
+      let origin = card.querySelector('.om-origin-badge');
+      if (token.platform === 'onemod') {
+        if (!origin) { origin = document.createElement('span'); origin.className = 'om-origin-badge'; card.appendChild(origin); }
+        origin.textContent = 'ONEMOD'; origin.hidden = false;
+      } else if (origin) origin.hidden = true;
       const link = card.querySelector('.cc-hit'); if (link) { link.href = href(token); link.setAttribute('aria-label', `${safe(token.name)} $${safe(token.symbol)}`); }
       const pic = card.querySelector('.cc-pic'); if (pic) { pic.src = image(token, index); pic.alt = `$${safe(token.symbol)} token artwork`; }
       const set = (selector, value) => { const node = card.querySelector(selector); if (node) node.textContent = value; };
@@ -36,6 +41,11 @@
     const list = filtered(); renderCards(list);
     document.querySelectorAll('.trend .tile').forEach((tile, index) => {
       const token = list[index]; tile.hidden = !token; tile.style.display = token ? '' : 'none'; if (!token) return;
+      let origin = tile.querySelector('.om-origin-badge');
+      if (token.platform === 'onemod') {
+        if (!origin) { origin = document.createElement('span'); origin.className = 'om-origin-badge'; tile.appendChild(origin); }
+        origin.textContent = 'ONEMOD'; origin.hidden = false;
+      } else if (origin) origin.hidden = true;
       tile.href = href(token); const pic = tile.querySelector('.tile-img'); if (pic) { pic.src = image(token, index); pic.alt = `$${safe(token.symbol)} token artwork`; }
       const set = (selector, value) => { const node = tile.querySelector(selector); if (node) node.textContent = value; };
       set('.tile-name', safe(token.name, 'Untitled')); set('.tile-tick', `$${safe(token.symbol, 'TOKEN')}`); set('.tile-mc', `${Number(token.marketCapSol || 0).toFixed(2)} SOL`); set('.chg', 'LIVE');
@@ -63,7 +73,7 @@
       const response = await fetch(uri); if (!response.ok) return;
       const meta = await response.json();
       const imagePath = String(meta.image || token.image || '').match(/(?:ipfs:\/\/|\/ipfs\/)([^?#]+)/)?.[1];
-      token.image = imagePath ? `https://gateway.pinata.cloud/ipfs/${imagePath}` : (meta.image || token.image); token.description = meta.description || token.description; token.twitter = meta.twitter || ''; token.website = meta.website || ''; token.metadataLoaded = true;
+      token.image = imagePath ? `https://gateway.pinata.cloud/ipfs/${imagePath}` : (meta.image || token.image); token.description = meta.description || token.description; token.twitter = meta.twitter || ''; token.website = meta.website || ''; token.platform = String(meta.platform || '').toLowerCase(); token.metadataLoaded = true;
       localStorage.setItem(KEY, JSON.stringify(tokens.slice(0, 40))); render();
     } catch {}
   }

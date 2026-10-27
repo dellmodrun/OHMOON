@@ -74,7 +74,7 @@
         const turbo = await TurboFactory.authenticated({ token:'solana', walletAdapter:{ publicKey:new solanaWeb3.PublicKey(window.OnemodWallet.state.address), signMessage:message => window.OnemodWallet.signMessage(message) } });
         const imageResult = await turbo.upload({ data:file, dataItemOpts:{ tags:[{name:'Content-Type',value:file.type},{name:'App-Name',value:'Onemod'}] } });
         const imageUrl = `https://turbo-gateway.com/${imageResult.id}`;
-        const metadata = JSON.stringify({ name:name.value.trim(), symbol:ticker.value.trim().replace(/^\$/, '').toUpperCase(), description:brief?.value.trim() || '', image:imageUrl, showName:true, twitter:x?.value.trim() || '', telegram:telegram?.value.trim() || '', website:website?.value.trim() || '' });
+        const metadata = JSON.stringify({ name:name.value.trim(), symbol:ticker.value.trim().replace(/^\$/, '').toUpperCase(), description:brief?.value.trim() || '', image:imageUrl, showName:true, platform:'onemod', twitter:x?.value.trim() || '', telegram:telegram?.value.trim() || '', website:website?.value.trim() || '' });
         const metadataResult = await turbo.upload({ data:metadata, dataItemOpts:{ tags:[{name:'Content-Type',value:'application/json'},{name:'App-Name',value:'Onemod'}] } });
         metadataInput.value = `https://turbo-gateway.com/${metadataResult.id}`; status.textContent = 'Image and metadata uploaded permanently. Review the values, then create the token.'; uploadButton.textContent = 'Metadata ready';
       } catch (error) { status.textContent = error.message || 'Metadata upload failed.'; status.classList.add('error'); uploadButton.textContent = 'Upload image & build metadata'; }
