@@ -72,9 +72,42 @@
     const token = { ...event, seenAt: Date.now() }; tokens = [token, ...tokens.filter(item => item.mint !== token.mint)].slice(0, 40); localStorage.setItem(KEY, JSON.stringify(tokens)); render(); hydrate(token);
   }
 
-  document.querySelectorAll('.board-head .tab').forEach(button => {
+  const boardTabs = [...document.querySelectorAll('.board-head .tab')];
+  document.querySelector('.board-head .tabs-ind')?.remove();
+  boardTabs.forEach(button => {
     if (!['new', 'mcap', 'graduating'].includes(button.dataset.id)) { button.remove(); return; }
-    button.addEventListener('click', () => { sort = button.dataset.id; document.querySelectorAll('.board-head .tab').forEach(node => { node.classList.toggle('on', node === button); node.setAttribute('aria-selected', String(node === button)); }); render(); });
+    const active = button.dataset.id === sort;
+    button.classList.toggle('on', active);
+    button.setAttribute('aria-selected', String(active));
+    button.setAttribute('tabindex', active ? '0' : '-1');
+  });
+  const activeBoardTabs = () => [...document.querySelectorAll('.board-head .tab')];
+  const selectBoardTab = button => {
+    if (!button) return;
+    sort = button.dataset.id;
+    activeBoardTabs().forEach(node => {
+      const active = node === button;
+      node.classList.toggle('on', active);
+      node.setAttribute('aria-selected', String(active));
+      node.setAttribute('tabindex', active ? '0' : '-1');
+    });
+    render();
+  };
+  activeBoardTabs().forEach(button => {
+    button.addEventListener('click', () => selectBoardTab(button));
+    button.addEventListener('keydown', event => {
+      const tabs = activeBoardTabs();
+      const index = tabs.indexOf(button);
+      const next = event.key === 'ArrowRight' ? tabs[(index + 1) % tabs.length]
+        : event.key === 'ArrowLeft' ? tabs[(index - 1 + tabs.length) % tabs.length]
+        : event.key === 'Home' ? tabs[0]
+        : event.key === 'End' ? tabs[tabs.length - 1]
+        : null;
+      if (!next) return;
+      event.preventDefault();
+      selectBoardTab(next);
+      next.focus();
+    });
   });
   document.querySelectorAll('.search input').forEach(input => input.addEventListener('input', () => { query = input.value.trim().toLowerCase(); render(); }));
   render(); tokens.forEach(hydrate);

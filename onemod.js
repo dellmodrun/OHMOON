@@ -12,17 +12,18 @@
     $$('link[rel="icon"],link[rel="shortcut icon"]').forEach(link => link.remove());
     const favicon = document.createElement('link'); favicon.rel = 'icon'; favicon.type = 'image/png'; favicon.href = `${BASE}/assets/onemod-favicon.png?v=6`; document.head.appendChild(favicon);
     $$('.brand,.tn-brand').forEach(brand => { brand.setAttribute('aria-label', 'Onemod'); brand.innerHTML = `<img class="mark" src="${LOGO}" alt="Onemod"><span class="onemod-word">onemod</span>`; });
-    $$('.xlink').forEach(link => { link.textContent = 'BUILD'; link.setAttribute('aria-label', 'Open launch workspace'); link.href = `${BASE}/launch/`; link.removeAttribute('target'); });
+    $$('.xlink').forEach(link => {
+      link.classList.add('om-xlink'); link.setAttribute('aria-label', 'Follow Onemod on X'); link.title = 'Follow @onemoruntime on X'; link.href = 'https://x.com/onemoruntime'; link.target = '_blank'; link.rel = 'noreferrer';
+      link.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>';
+      if (!link.previousElementSibling?.classList.contains('om-ca-panel')) { const ca = document.createElement('div'); ca.className = 'om-ca-panel'; ca.innerHTML = '<span>OFFICIAL TOKEN</span><strong>$ONEMOD</strong><code>CA · TBA</code>'; link.before(ca); }
+    });
     $$('.wchip-cta,.wtab').forEach(button => { button.textContent = 'Connect wallet'; button.setAttribute('aria-label', 'Connect Solana wallet'); });
     document.documentElement.classList.add('onemod-ready');
   }
 
   function bindLooks() {
-    $$('.lookswitch button').forEach(button => button.addEventListener('click', () => {
-      const value = button.textContent.trim().toLowerCase();
-      if (value === 'old') document.documentElement.removeAttribute('data-look'); else document.documentElement.setAttribute('data-look', value);
-      $$('.lookswitch button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-    }));
+    document.documentElement.removeAttribute('data-look');
+    $$('.lookswitch').forEach(node => node.remove());
   }
 
   function bindLaunchForm() {
