@@ -1,12 +1,13 @@
-const CACHE = 'onemod-shell-v7';
+const CACHE = 'onemod-shell-v8';
+const BASE = new URL(self.registration.scope).pathname.replace(/\/$/, '');
 const SHELL = [
-  '/onemod/', '/onemod/live/', '/onemod/calls/', '/onemod/burns/', '/onemod/launch/', '/onemod/how/', '/onemod/trade/',
-  '/onemod/onemod.css', '/onemod/wallet.css', '/onemod/project-detail.css', '/onemod/onemod.js', '/onemod/wallet.js', '/onemod/live-data.js', '/onemod/project-detail.js',
-  '/onemod/assets/onemod-logo-transparent.png', '/onemod/assets/onemod-favicon.png', '/onemod/assets/projects/token-placeholder.svg', '/onemod/vendor/solana-web3.min.js', '/onemod/vendor/wallet-standard.min.js'
-];
+  '/', '/live/', '/calls/', '/burns/', '/launch/', '/how/', '/trade/',
+  '/onemod.css', '/wallet.css', '/project-detail.css', '/onemod.js', '/wallet.js', '/live-data.js', '/project-detail.js',
+  '/assets/onemod-logo-transparent.png', '/assets/onemod-favicon.png', '/assets/projects/token-placeholder.svg', '/vendor/solana-web3.min.js', '/vendor/wallet-standard.min.js'
+].map(path => `${BASE}${path}`);
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting())));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET' || new URL(event.request.url).origin !== location.origin) return;
-  event.respondWith(fetch(event.request).then(response => { const copy = response.clone(); caches.open(CACHE).then(cache => cache.put(event.request, copy)); return response; }).catch(() => caches.match(event.request).then(hit => hit || caches.match('/onemod/'))));
+  event.respondWith(fetch(event.request).then(response => { if (response.ok) { const copy = response.clone(); caches.open(CACHE).then(cache => cache.put(event.request, copy)); } return response; }).catch(() => caches.match(event.request).then(hit => hit || (event.request.mode === 'navigate' ? caches.match(`${BASE}/`) : Response.error()))));
 });
