@@ -1,13 +1,13 @@
 (() => {
-  const BASE = ['/onemod', '/OHMOON'].find(base => location.pathname === base || location.pathname.startsWith(`${base}/`)) || '';
-  const KEY = 'onemod-live-projects-v2';
-  const LEGACY_KEY = 'onemod-live-projects-v1';
+  const BASE = ['/ohmoon', '/OHMOON'].find(base => location.pathname === base || location.pathname.startsWith(`${base}/`)) || '';
+  const KEY = 'ohmoon-live-projects-v2';
+  const LEGACY_KEY = 'ohmoon-live-projects-v1';
   const PLACEHOLDER = `${BASE}/assets/projects/token-placeholder.svg`;
   const SOL_MINT = 'So11111111111111111111111111111111111111112';
   let sort = 'new';
   let query = '';
   let tokens = [];
-  let solUsd = Number(sessionStorage.getItem('onemod-sol-usd') || 0);
+  let solUsd = Number(sessionStorage.getItem('ohmoon-sol-usd') || 0);
   try { tokens = JSON.parse(localStorage.getItem(KEY) || localStorage.getItem(LEGACY_KEY) || '[]').filter(item => item?.mint); } catch {}
   const initialSeen = new Set(); tokens = tokens.filter(token => { const key = `${token.traderPublicKey || ''}|${token.name || ''}|${token.symbol || ''}`.toLowerCase(); if (initialSeen.has(token.mint) || initialSeen.has(key)) return false; initialSeen.add(token.mint); initialSeen.add(key); return true; });
 
@@ -52,9 +52,9 @@
     document.querySelectorAll('.boardsec .ccard').forEach((card, index) => {
       const token = list[index]; card.hidden = !token; card.style.display = token ? '' : 'none'; if (!token) return;
       let origin = card.querySelector('.om-origin-badge');
-      if (token.platform === 'onemod') {
+      if (token.platform === 'ohmoon') {
         if (!origin) { origin = document.createElement('span'); origin.className = 'om-origin-badge'; card.appendChild(origin); }
-        origin.textContent = 'ONEMOD'; origin.hidden = false;
+        origin.textContent = 'OHMOON'; origin.hidden = false;
       } else if (origin) origin.hidden = true;
       const link = card.querySelector('.cc-hit'); if (link) { link.href = href(token); link.setAttribute('aria-label', `${safe(token.name)} ${ticker(token.symbol)}`); }
       setImage(card.querySelector('.cc-pic'), token, `${ticker(token.symbol)} token artwork`);
@@ -63,7 +63,7 @@
       const ath = card.querySelector('.cc-ath'); if (ath) { ath.hidden = false; ath.style.display = ''; ath.textContent = token.marketSource === 'market' ? 'live market' : 'curve estimate'; }
       const marketCap = card.querySelector('.cc-mcv'); if (marketCap) marketCap.title = token.marketSource === 'market' ? 'Live USD market cap from the active SOL market' : 'USD estimate from the latest bonding-curve valuation';
       const volume = card.querySelector('.cc-foot .chip:not(.chip-pair) .mono'); if (volume) volume.textContent = usd(token.volumeUsd24h, '$0');
-      const author = card.querySelector('.cc-by'); if (author) { author.textContent = token.platform === 'onemod' ? 'Onemod' : 'Pump.fun'; author.title = token.platform === 'onemod' ? 'Created through Onemod' : 'Discovered on the Pump.fun creation stream'; }
+      const author = card.querySelector('.cc-by'); if (author) { author.textContent = token.platform === 'ohmoon' ? 'OhMoon' : 'Pump.fun'; author.title = token.platform === 'ohmoon' ? 'Created through OhMoon' : 'Discovered on the Pump.fun creation stream'; }
       card.querySelectorAll('.spark').forEach(node => { node.hidden = true; node.style.display = 'none'; });
       const name = card.querySelector('.cc-name'); if (name) { name.textContent = safe(token.name, 'Untitled'); const symbol = document.createElement('small'); symbol.textContent = ticker(token.symbol); name.append(' ', symbol); }
       const pct = progress(token), bar = card.querySelector('[role="progressbar"]'); if (bar) { bar.style.setProperty('--v', pct / 100); bar.setAttribute('aria-valuenow', pct); }
@@ -76,9 +76,9 @@
     document.querySelectorAll('.trend .tile').forEach((tile, index) => {
       const token = list[index]; tile.hidden = !token; tile.style.display = token ? '' : 'none'; if (!token) return;
       let origin = tile.querySelector('.om-origin-badge');
-      if (token.platform === 'onemod') {
+      if (token.platform === 'ohmoon') {
         if (!origin) { origin = document.createElement('span'); origin.className = 'om-origin-badge'; tile.appendChild(origin); }
-        origin.textContent = 'ONEMOD'; origin.hidden = false;
+        origin.textContent = 'OHMOON'; origin.hidden = false;
       } else if (origin) origin.hidden = true;
       tile.href = href(token); setImage(tile.querySelector('.tile-img'), token, `${ticker(token.symbol)} token artwork`);
       const set = (selector, value) => { const node = tile.querySelector(selector); if (node) node.textContent = value; };
@@ -94,7 +94,7 @@
     const spot = document.querySelector('.lc-spot'), first = list[0];
     if (spot) { spot.hidden = !first; spot.style.display = first ? '' : 'none'; if (first) { setImage(spot.querySelector('img'), first, `${ticker(first.symbol)} token artwork`); spot.querySelector('.lc-spot-tick').textContent = ticker(first.symbol); spot.querySelector('.lc-spot-name').textContent = safe(first.name, 'Untitled'); spot.querySelector('.lc-spot-foot b').textContent = usd(first.marketCapUsd); spot.querySelector('.lc-spot-cta a').href = href(first); const pct = progress(first), fill = spot.querySelector('.lc-fill'); if (fill) fill.style.width = `${pct}%`; const steps = spot.querySelectorAll('.lc-steps span'); if (steps.length === 3) { steps[0].textContent = first.metadataLoaded ? 'metadata ready' : 'metadata pending'; steps[1].textContent = 'market live'; steps[2].textContent = `${pct}% curve`; } } }
     document.querySelectorAll('.lc-grid .lc-card-link').forEach((card, index) => { const token = list[index + 1]; card.hidden = !token; card.style.display = token ? '' : 'none'; if (!token) return; card.href = href(token); setImage(card.querySelector('img'), token, `${ticker(token.symbol)} token artwork`); card.querySelector('.lc-card-tick').textContent = ticker(token.symbol); card.querySelector('.lc-card-name').textContent = safe(token.name, 'Untitled'); card.querySelector('.lc-card-right b').textContent = usd(token.marketCapUsd); card.querySelector('.lc-card-right span').textContent = `${age(token.seenAt)} ago`; const pct = progress(token), shell = card.closest('.lc-card'), fill = shell?.querySelector('.lc-fill'); if (fill) fill.style.width = `${pct}%`; const steps = shell?.querySelectorAll('.lc-steps span') || []; if (steps.length === 3) { steps[0].textContent = token.metadataLoaded ? 'metadata' : 'metadata pending'; steps[1].textContent = 'market live'; steps[2].textContent = `${pct}% curve`; } });
-    document.querySelectorAll('.so-call').forEach((call, index) => { const token = list[index]; call.hidden = !token; call.style.display = token ? '' : 'none'; if (!token) return; const coin = call.querySelector('.so-coin'); coin.href = href(token); setImage(coin.querySelector('img'), token, `${ticker(token.symbol)} token artwork`); coin.querySelector('b').textContent = safe(token.name, 'Untitled'); coin.querySelector('.mono.muted').textContent = ticker(token.symbol); call.querySelector('.so-ava').textContent = safe(token.symbol, '??').replace(/^\$+/, '').slice(0, 2).toUpperCase(); call.querySelector('.so-addr').textContent = shortAddress(token.traderPublicKey); call.querySelector('.so-badge').textContent = 'creator'; call.querySelector('.so-ago').textContent = `${age(token.seenAt)} ago`; call.querySelector('.so-text').textContent = token.description ? safe(token.description) : 'A live Pump.fun market discovered by Onemod.'; const scores = call.querySelectorAll('.so-score>div'); if (scores.length >= 2) { scores[0].querySelector('.cc-lbl').textContent = 'market cap'; scores[0].querySelector('b').textContent = usd(token.marketCapUsd); scores[1].querySelector('.cc-lbl').textContent = '24h volume'; scores[1].querySelector('b').textContent = usd(token.volumeUsd24h, '$0'); } call.querySelector('.so-chg').textContent = `${progress(token)}% CURVE`; });
+    document.querySelectorAll('.so-call').forEach((call, index) => { const token = list[index]; call.hidden = !token; call.style.display = token ? '' : 'none'; if (!token) return; const coin = call.querySelector('.so-coin'); coin.href = href(token); setImage(coin.querySelector('img'), token, `${ticker(token.symbol)} token artwork`); coin.querySelector('b').textContent = safe(token.name, 'Untitled'); coin.querySelector('.mono.muted').textContent = ticker(token.symbol); call.querySelector('.so-ava').textContent = safe(token.symbol, '??').replace(/^\$+/, '').slice(0, 2).toUpperCase(); call.querySelector('.so-addr').textContent = shortAddress(token.traderPublicKey); call.querySelector('.so-badge').textContent = 'creator'; call.querySelector('.so-ago').textContent = `${age(token.seenAt)} ago`; call.querySelector('.so-text').textContent = token.description ? safe(token.description) : 'A live Pump.fun market discovered by OhMoon.'; const scores = call.querySelectorAll('.so-score>div'); if (scores.length >= 2) { scores[0].querySelector('.cc-lbl').textContent = 'market cap'; scores[0].querySelector('b').textContent = usd(token.marketCapUsd); scores[1].querySelector('.cc-lbl').textContent = '24h volume'; scores[1].querySelector('b').textContent = usd(token.volumeUsd24h, '$0'); } call.querySelector('.so-chg').textContent = `${progress(token)}% CURVE`; });
     document.querySelectorAll('.main table tbody tr').forEach((row, index) => { const token = list[index]; row.hidden = !token; row.style.display = token ? '' : 'none'; if (!token) return; const cells = row.querySelectorAll('td'); if (cells.length < 5) return; cells[0].innerHTML = `<a href="${href(token)}"><b>${ticker(token.symbol)}</b></a>`; cells[1].textContent = 'Pump.fun market created'; cells[2].textContent = shortAddress(token.traderPublicKey); cells[3].textContent = `${age(token.seenAt)} ago`; cells[4].innerHTML = '<span class="chip chip-ok">live</span>'; });
     const indexed = tokens.filter(token => token.marketSource === 'market').length, estimated = tokens.filter(token => token.marketSource !== 'market').length;
     const liveStats = document.querySelectorAll('.lc-stat b'); if (liveStats.length) { liveStats[0].textContent = tokens.length; liveStats[1].textContent = indexed; liveStats[2].textContent = 'LIVE'; const labels = document.querySelectorAll('.lc-stat span'); if (labels.length >= 3) { labels[0].textContent = 'projects loaded'; labels[1].textContent = 'markets indexed'; labels[2].textContent = 'feed status'; } }
@@ -120,7 +120,7 @@
       const response = await fetch(`https://api.geckoterminal.com/api/v2/simple/networks/solana/token_price/${SOL_MINT}`);
       if (!response.ok) return;
       const payload = await response.json(), value = Number(payload?.data?.attributes?.token_prices?.[SOL_MINT]);
-      if (Number.isFinite(value) && value > 0) { solUsd = value; sessionStorage.setItem('onemod-sol-usd', String(value)); }
+      if (Number.isFinite(value) && value > 0) { solUsd = value; sessionStorage.setItem('ohmoon-sol-usd', String(value)); }
     } catch {}
   }
   async function refreshMarketData() {

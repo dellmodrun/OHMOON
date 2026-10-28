@@ -1,15 +1,15 @@
 ﻿(() => {
   const root = document.querySelector('[data-project]'), canvas = document.querySelector('#pd-chart');
   if (!root || !canvas) return;
-  const BASE = ['/onemod', '/OHMOON'].find(base => location.pathname === base || location.pathname.startsWith(`${base}/`)) || '';
+  const BASE = ['/ohmoon', '/OHMOON'].find(base => location.pathname === base || location.pathname.startsWith(`${base}/`)) || '';
   const params = new URLSearchParams(location.search);
   const mint = params.get('mint') || root.dataset.mint || '';
   if (!mint) { location.replace(`${BASE}/`); return; }
   let token = null;
-  try { token = JSON.parse(localStorage.getItem('onemod-live-projects-v2') || localStorage.getItem('onemod-live-projects-v1') || '[]').find(item => item.mint === mint) || null; } catch {}
+  try { token = JSON.parse(localStorage.getItem('ohmoon-live-projects-v2') || localStorage.getItem('ohmoon-live-projects-v1') || '[]').find(item => item.mint === mint) || null; } catch {}
   let ticker = token?.symbol || root.dataset.ticker || 'TOKEN';
   let side = 'buy', period = '5m', trades = [], history = [], poolAddress = '', chartState = 'LOADING MARKET HISTORY';
-  let solUsd = Number(sessionStorage.getItem('onemod-sol-usd') || 0);
+  let solUsd = Number(sessionStorage.getItem('ohmoon-sol-usd') || 0);
   const chartCache = new Map();
   const periodMs = { '1m':60000, '5m':300000, '15m':900000, '1h':3600000, '4h':14400000 };
   const fmt = value => Number(value || 0).toLocaleString(undefined, { maximumFractionDigits: 6 });
@@ -17,12 +17,12 @@
   const money = value => { const amount = Number(value); return Number.isFinite(amount) && amount > 0 ? amount.toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:amount >= 100 ? 0 : 2}) : 'loading'; };
   const marketCapUsd = () => { const stored = Number(token?.marketCapUsd || 0); if (stored > 0) return stored; const curve = Number(token?.marketCapSol || 0); return curve > 0 && solUsd > 0 ? curve * solUsd : 0; };
   const tokenImage = () => token?.localImage ? `${BASE}/${String(token.localImage).replace(/^\/+/, '')}` : token?.marketImage || token?.image || `${BASE}/assets/projects/token-placeholder.svg`;
-  async function cachedJson(key,url,ttl=60000){let cached=null;try{cached=JSON.parse(localStorage.getItem(`onemod-cache:${key}`)||'null');if(cached&&Date.now()-cached.savedAt<ttl)return cached.data;}catch{}try{const response=await fetch(url,{headers:{Accept:'application/json;version=20230203'}});if(!response.ok)throw new Error(`${response.status}`);const data=await response.json();try{localStorage.setItem(`onemod-cache:${key}`,JSON.stringify({savedAt:Date.now(),data}));}catch{}return data;}catch(error){if(cached?.data)return cached.data;throw error;}}
+  async function cachedJson(key,url,ttl=60000){let cached=null;try{cached=JSON.parse(localStorage.getItem(`ohmoon-cache:${key}`)||'null');if(cached&&Date.now()-cached.savedAt<ttl)return cached.data;}catch{}try{const response=await fetch(url,{headers:{Accept:'application/json;version=20230203'}});if(!response.ok)throw new Error(`${response.status}`);const data=await response.json();try{localStorage.setItem(`ohmoon-cache:${key}`,JSON.stringify({savedAt:Date.now(),data}));}catch{}return data;}catch(error){if(cached?.data)return cached.data;throw error;}}
 
   function hydrateIdentity() {
     if (!mint) return;
     const name = token?.name || 'Live Pump.fun token'; ticker = token?.symbol || ticker;
-    root.dataset.ticker = ticker; root.dataset.mint = mint; document.title = `${name} ($${ticker}) - Onemod`;
+    root.dataset.ticker = ticker; root.dataset.mint = mint; document.title = `${name} ($${ticker}) - OhMoon`;
     const title = document.querySelector('.pd-id h1'); if (title) title.innerHTML = `${name} <span class="pd-up">$${ticker}</span>`;
     const desc = document.querySelector('.pd-id p'); if (desc) desc.textContent = token?.description || `Live Pump.fun market ${mint}`;
     const profile = document.querySelector('.pd-profile p'); if (profile) profile.textContent = token?.description || `Live Pump.fun market ${mint}`;
@@ -61,7 +61,7 @@
   async function loadTokenIdentity() {
     try {
       const response = await fetch(`${BASE}/feed/live-projects.json?ts=${Math.floor(Date.now()/300000)}`); const items = response.ok ? await response.json() : [];
-      const shared = Array.isArray(items) ? items.find(item => item.mint === mint) : null; if (shared) { token = { ...(token || {}), ...shared }; try { const saved = JSON.parse(localStorage.getItem('onemod-live-projects-v2') || '[]').filter(item => item?.mint !== mint); localStorage.setItem('onemod-live-projects-v2', JSON.stringify([token, ...saved].slice(0, 40))); } catch {} }
+      const shared = Array.isArray(items) ? items.find(item => item.mint === mint) : null; if (shared) { token = { ...(token || {}), ...shared }; try { const saved = JSON.parse(localStorage.getItem('ohmoon-live-projects-v2') || '[]').filter(item => item?.mint !== mint); localStorage.setItem('ohmoon-live-projects-v2', JSON.stringify([token, ...saved].slice(0, 40))); } catch {} }
       hydrateIdentity();
       if (token?.uri && !token.metadataLoaded) {
         const cid = String(token.uri).match(/(?:ipfs:\/\/|\/ipfs\/)([^?#]+)/)?.[1], uri = cid ? `https://gateway.pinata.cloud/ipfs/${cid}` : token.uri;
@@ -81,7 +81,7 @@
       const response = await fetch(`https://api.geckoterminal.com/api/v2/simple/networks/solana/token_price/${solMint}`);
       const payload = response.ok ? await response.json() : null;
       const value = Number(payload?.data?.attributes?.token_prices?.[solMint] || 0);
-      if (value > 0) { solUsd = value; sessionStorage.setItem('onemod-sol-usd', String(value)); hydrateIdentity(); }
+      if (value > 0) { solUsd = value; sessionStorage.setItem('ohmoon-sol-usd', String(value)); hydrateIdentity(); }
     } catch {}
     return solUsd;
   }
@@ -149,7 +149,7 @@
     };
     socket.onopen = async () => {
       socket.send(JSON.stringify({ jsonrpc:'2.0', id:1, method:'accountSubscribe', params:[curve.toBase58(), { encoding:'base64', commitment:'confirmed' }] }));
-      try { const result = await OnemodWallet.rpc('getAccountInfo', [curve.toBase58(), { encoding:'base64', commitment:'confirmed' }]); handleEncoded(result?.value?.data?.[0]); } catch {}
+      try { const result = await OhMoonWallet.rpc('getAccountInfo', [curve.toBase58(), { encoding:'base64', commitment:'confirmed' }]); handleEncoded(result?.value?.data?.[0]); } catch {}
     };
     socket.onmessage = message => { try { handleEncoded(JSON.parse(message.data)?.params?.result?.value?.data?.[0]); } catch {} };
     socket.onerror = () => socket.close();
@@ -164,7 +164,7 @@
   const slippage=settings.querySelector('[name="slippage"]'),priorityFee=settings.querySelector('[name="priorityFee"]');
   const balanceNode=document.querySelector('.pd-balance span:last-child');
   function updateTradeButton(){
-    const walletState=window.OnemodWallet?.state;
+    const walletState=window.OhMoonWallet?.state;
     if(balanceNode) balanceNode.textContent=walletState?.address ? `balance ${walletState.balance == null ? 'loading' : walletState.balance.toFixed(4)} SOL` : 'wallet not connected';
     if(!mint){wallet.textContent='Market not linked';wallet.disabled=true;return;}
     wallet.disabled=false;wallet.textContent=walletState?.address?`${side==='buy'?'Buy':'Sell'} $${ticker}`:'Connect wallet';
@@ -173,7 +173,7 @@
   document.querySelectorAll('.pd-quick button').forEach(btn=>btn.addEventListener('click',()=>amount.value=btn.dataset.amount));
   wallet.addEventListener('click',async()=>{
     try{
-      if(!window.OnemodWallet.state.address){await window.OnemodWallet.connect();updateTradeButton();return;}
+      if(!window.OhMoonWallet.state.address){await window.OhMoonWallet.connect();updateTradeButton();return;}
       const value=Number(amount.value),slip=Number(slippage.value),fee=Number(priorityFee.value);
       if(!(value>0)) throw new Error('Enter an amount greater than zero.');
       if(side==='sell' && value>100) throw new Error('Sell percentage cannot exceed 100%.');
@@ -181,9 +181,9 @@
       if(!(fee>=0)) throw new Error('Priority fee cannot be negative.');
       wallet.disabled=true;wallet.textContent='Building transaction...';
       note.textContent=`Review: ${side.toUpperCase()} ${side==='buy'?value+' SOL':value+'%'} of $${ticker}, ${slip}% max slippage, ${fee} SOL priority fee.`;
-      const signature=await window.OnemodWallet.trade({mint,action:side,amount:side==='sell'?`${value}%`:value,denominatedInSol:side==='buy',slippage:slip,priorityFee:fee});
+      const signature=await window.OhMoonWallet.trade({mint,action:side,amount:side==='sell'?`${value}%`:value,denominatedInSol:side==='buy',slippage:slip,priorityFee:fee});
       note.innerHTML=`Submitted | <a href="https://solscan.io/tx/${signature}" target="_blank" rel="noreferrer">view on Solscan</a>`;wallet.textContent='Transaction submitted';
     }catch(error){note.textContent=error.message||'Transaction was not submitted.';updateTradeButton();}finally{wallet.disabled=false;}
   });
-  window.addEventListener('onemod:wallet',updateTradeButton); new ResizeObserver(draw).observe(canvas); hydrateIdentity();updateTradeButton();draw();loadSolPrice();loadTokenIdentity();loadPool();curveStream();
+  window.addEventListener('ohmoon:wallet',updateTradeButton); new ResizeObserver(draw).observe(canvas); hydrateIdentity();updateTradeButton();draw();loadSolPrice();loadTokenIdentity();loadPool();curveStream();
 })();

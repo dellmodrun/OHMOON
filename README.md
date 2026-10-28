@@ -1,6 +1,6 @@
-﻿# Onemod
+﻿# OhMoon
 
-Onemod is a live Pump.fun discovery, launch and trading interface for Solana.
+OhMoon is a live Pump.fun discovery, launch and trading interface for Solana.
 
 ## Local development
 
@@ -9,7 +9,7 @@ npm install
 npm start
 ```
 
-Open `http://127.0.0.1:4184/`. The static site is published under `/onemod/` on GitHub Pages.
+Open `http://127.0.0.1:4184/`. The static site is published under `/OHMOON/` on GitHub Pages.
 
 ## Runtime integrations
 

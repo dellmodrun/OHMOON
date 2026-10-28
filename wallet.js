@@ -1,7 +1,7 @@
 (() => {
   const RPC_ENDPOINTS = ['https://solana-rpc.publicnode.com', 'https://api.mainnet-beta.solana.com'];
-  const BASE = ['/onemod', '/OHMOON'].find(base => location.pathname === base || location.pathname.startsWith(`${base}/`)) || '';
-  const ONEMOD_LOGO = `${BASE}/assets/onemod-logo-transparent.png`;
+  const BASE = ['/ohmoon', '/OHMOON'].find(base => location.pathname === base || location.pathname.startsWith(`${base}/`)) || '';
+  const OHMOON_LOGO = `${BASE}/assets/ohmoon-logo.png`;
   const state = { provider: null, account: null, standard: false, address: '', name: '', balance: null };
   const short = (value) => value ? `${value.slice(0, 4)}...${value.slice(-4)}` : '';
   const brandIcons = {
@@ -9,7 +9,7 @@
     'Coinbase Wallet': `${BASE}/assets/wallets-coinbase.ico`, 'Trust Wallet': `${BASE}/assets/wallets-trust.ico`
   };
   const providers = () => {
-    const standard = (window.OnemodWalletRegistry?.get?.() || []).filter(wallet => wallet.features?.['standard:connect'] && wallet.chains?.some(chain => String(chain).startsWith('solana:'))).map(wallet => ({ name: wallet.name, icon: wallet.icon, wallet, standard: true }));
+    const standard = (window.OhMoonWalletRegistry?.get?.() || []).filter(wallet => wallet.features?.['standard:connect'] && wallet.chains?.some(chain => String(chain).startsWith('solana:'))).map(wallet => ({ name: wallet.name, icon: wallet.icon, wallet, standard: true }));
     const legacy = [
       ['Phantom', window.phantom?.solana], ['Solflare', window.solflare], ['Backpack', window.backpack], ['Coinbase Wallet', window.coinbaseSolana],
       ['Trust Wallet', window.trustwallet?.solana], ['Brave Wallet', window.braveSolana], ['Exodus', window.exodus?.solana], ['Glow', window.glowSolana],
@@ -31,7 +31,7 @@
       button.dataset.connected = state.address ? 'true' : 'false';
       if (state.address && !button.classList.contains('pd-wallet')) button.textContent = `${short(state.address)}${state.balance == null ? '' : ` | ${state.balance.toFixed(2)} SOL`}`;
     });
-    window.dispatchEvent(new CustomEvent('onemod:wallet', { detail: { ...state } }));
+    window.dispatchEvent(new CustomEvent('ohmoon:wallet', { detail: { ...state } }));
   }
 
   async function rpc(method, params) {
@@ -63,7 +63,7 @@
     }
     if (!address) throw new Error('The wallet did not return a Solana account.');
     state.provider = entry.standard ? entry.wallet : entry.provider; state.account = account; state.standard = entry.standard; state.address = address; state.name = entry.name;
-    localStorage.setItem('onemod-wallet', entry.name);
+    localStorage.setItem('ohmoon-wallet', entry.name);
     if (!entry.standard) {
       entry.provider.on?.('accountChanged', (key) => { state.address = key?.toString?.() || ''; state.balance = null; updateButtons(); readBalance(); });
       entry.provider.on?.('disconnect', () => { state.provider = null; state.account = null; state.address = ''; state.balance = null; updateButtons(); });
@@ -81,7 +81,7 @@
         ['Phantom', brandIcons.Phantom, 'https://phantom.com/download'], ['Solflare', brandIcons.Solflare, 'https://www.solflare.com/download'], ['Backpack', brandIcons.Backpack, 'https://backpack.app/download'],
         ['Coinbase Wallet', brandIcons['Coinbase Wallet'], 'https://www.coinbase.com/wallet/downloads'], ['Trust Wallet', brandIcons['Trust Wallet'], 'https://trustwallet.com/download']
       ];
-      wrap.innerHTML = `<button class="om-wallet-backdrop" aria-label="Close wallet selector"></button><section class="om-wallet-sheet" role="dialog" aria-modal="true" aria-label="Choose a Solana wallet"><header><div><small>SOLANA WALLET STANDARD</small><h2>Connect to Onemod</h2></div><button class="om-wallet-close" aria-label="Close">x</button></header><p>Your compatible Solana wallets are detected automatically. Your wallet keeps custody and approves every transaction.</p><div class="om-wallet-list">${found.map((entry, i) => `<button data-provider="${i}"><img src="${entry.icon || brandIcons[entry.name] || ONEMOD_LOGO}" alt=""><b>${entry.name}</b><em>detected</em></button>`).join('') || '<div class="om-wallet-empty">No compatible wallet was detected in this browser.</div>'}</div><div class="om-wallet-more"><small>POPULAR WALLETS</small>${installs.map(([name, icon, url]) => `<a href="${url}" target="_blank" rel="noreferrer"><img src="${icon}" alt=""><span>${name}</span><em>install -&gt;</em></a>`).join('')}</div></section>`;
+      wrap.innerHTML = `<button class="om-wallet-backdrop" aria-label="Close wallet selector"></button><section class="om-wallet-sheet" role="dialog" aria-modal="true" aria-label="Choose a Solana wallet"><header><div><small>SOLANA WALLET STANDARD</small><h2>Connect to OhMoon</h2></div><button class="om-wallet-close" aria-label="Close">x</button></header><p>Your compatible Solana wallets are detected automatically. Your wallet keeps custody and approves every transaction.</p><div class="om-wallet-list">${found.map((entry, i) => `<button data-provider="${i}"><img src="${entry.icon || brandIcons[entry.name] || OHMOON_LOGO}" alt=""><b>${entry.name}</b><em>detected</em></button>`).join('') || '<div class="om-wallet-empty">No compatible wallet was detected in this browser.</div>'}</div><div class="om-wallet-more"><small>POPULAR WALLETS</small>${installs.map(([name, icon, url]) => `<a href="${url}" target="_blank" rel="noreferrer"><img src="${icon}" alt=""><span>${name}</span><em>install -&gt;</em></a>`).join('')}</div></section>`;
       document.body.appendChild(wrap);
       const close = () => { wrap.remove(); reject(new Error('Wallet selection cancelled.')); };
       wrap.querySelector('.om-wallet-backdrop').onclick = close; wrap.querySelector('.om-wallet-close').onclick = close;
@@ -105,7 +105,7 @@
       else await state.provider?.disconnect?.();
     } catch {}
     state.provider = null; state.account = null; state.standard = false; state.address = ''; state.name = ''; state.balance = null;
-    localStorage.removeItem('onemod-wallet'); updateButtons();
+    localStorage.removeItem('ohmoon-wallet'); updateButtons();
   }
 
   function accountModal() {
@@ -194,9 +194,9 @@
     if (state.address) { accountModal(); return; }
     connect().catch(error => { if (!/cancelled/i.test(error.message)) toast(error.message, 'error'); });
   });
-  window.OnemodWallet = { state, connect, disconnect, signMessage, trade, createCoin, rpc, toast, short };
+  window.OhMoonWallet = { state, connect, disconnect, signMessage, trade, createCoin, rpc, toast, short };
   window.addEventListener('DOMContentLoaded', async () => {
-    const remembered = localStorage.getItem('onemod-wallet');
+    const remembered = localStorage.getItem('ohmoon-wallet');
     const match = providers().find(entry => entry.name === remembered);
     if (match) { try { await useProvider(match, { onlyIfTrusted: true }); } catch {} }
     updateButtons();
