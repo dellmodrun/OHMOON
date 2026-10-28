@@ -1,4 +1,4 @@
-const CACHE = 'ohmoon-shell-v1';
+const CACHE = 'ohmoon-shell-v2';
 const BASE = new URL(self.registration.scope).pathname.replace(/\/$/, '');
 const SHELL = [
   '/', '/live/', '/calls/', '/burns/', '/launch/', '/how/', '/trade/',
