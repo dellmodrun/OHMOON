@@ -2,7 +2,7 @@
   const RPC_ENDPOINTS = ['https://solana-rpc.publicnode.com', 'https://api.mainnet-beta.solana.com'];
   const BASE = ['/ohmoon', '/OHMOON'].find(base => location.pathname === base || location.pathname.startsWith(`${base}/`)) || '';
   const OHMOON_LOGO = `${BASE}/assets/ohmoon-logo-transparent.png`;
-  const OFFICIAL_TOKEN_CA = '';
+  const OFFICIAL_TOKEN_CA = '4tBJYPArWFUG1LTPWMQqMNg8wHRQdoTxCmrnkFXbpump';
   const state = { provider: null, account: null, standard: false, address: '', name: '', balance: null };
   const short = (value) => value ? `${value.slice(0, 4)}...${value.slice(-4)}` : '';
   const brandIcons = {
