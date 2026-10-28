@@ -74,18 +74,11 @@ async function market(items) {
 }
 async function cacheImages(items) {
   fs.mkdirSync(imageDir, { recursive:true });
-  return Promise.all(items.map(async item => {
-    const source = item.marketImage || item.image; if (!source) return { ...item, localImage:'' };
+  return items.map(item => {
     const existing = fs.readdirSync(imageDir).find(name => name.startsWith(`${item.mint}.`));
     if (existing) return { ...item, localImage:`feed/images/${existing}` };
-    try {
-      const response = await fetch(source, { signal:AbortSignal.timeout(12000) }); if (!response.ok) return { ...item, localImage:'' };
-      const data = Buffer.from(await response.arrayBuffer()); if (!data.length || data.length > 5 * 1024 * 1024) return { ...item, localImage:'' };
-      const type = String(response.headers.get('content-type') || '').toLowerCase(), ext = type.includes('png') ? 'png' : type.includes('webp') ? 'webp' : type.includes('gif') ? 'gif' : 'jpg';
-      const filename = `${item.mint}.${ext}`; fs.writeFileSync(path.join(imageDir, filename), data);
-      return { ...item, localImage:`feed/images/${filename}` };
-    } catch { return { ...item, localImage:'' }; }
-  }));
+    return { ...item, localImage:'' };
+  });
 }
 const apiKey = String(process.env.PUMPPORTAL_API_KEY || '').trim();
 const socketUrl = `wss://pumpportal.fun/api/data${apiKey ? `?api-key=${encodeURIComponent(apiKey)}` : ''}`;
