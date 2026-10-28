@@ -13,7 +13,7 @@
     const legacy = [
       ['Phantom', window.phantom?.solana], ['Solflare', window.solflare], ['Backpack', window.backpack], ['Coinbase Wallet', window.coinbaseSolana],
       ['Trust Wallet', window.trustwallet?.solana], ['Brave Wallet', window.braveSolana], ['Exodus', window.exodus?.solana], ['Glow', window.glowSolana],
-      ['Coin98', window.coin98?.sol], ['MathWallet', window.solana]
+      ['Coin98', window.coin98?.sol]
     ].filter(([, provider]) => provider?.connect).map(([name, provider]) => ({ name, icon: brandIcons[name] || '', provider, standard: false }));
     return [...standard, ...legacy].filter((entry, index, all) => all.findIndex(item => item.name.toLowerCase() === entry.name.toLowerCase()) === index);
   };
