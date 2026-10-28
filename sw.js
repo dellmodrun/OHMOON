@@ -1,9 +1,8 @@
-const CACHE = 'ohmoon-shell-v5';
+const CACHE = 'ohmoon-survival-v1';
 const BASE = new URL(self.registration.scope).pathname.replace(/\/$/, '');
 const SHELL = [
-  '/', '/live/', '/calls/', '/burns/', '/launch/', '/how/', '/trade/',
-  '/ohmoon.css', '/wallet.css', '/project-detail.css', '/ohmoon.js', '/wallet.js', '/live-data.js', '/project-detail.js',
-  '/assets/ohmoon-logo-transparent.png', '/assets/projects/token-placeholder.svg', '/vendor/solana-web3.min.js', '/vendor/wallet-standard.min.js'
+  '/', '/live/', '/launch/', '/how/',
+  '/survival.css', '/survival.js', '/assets/ohmoon-logo-transparent.png'
 ].map(path => `${BASE}${path}`);
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting())));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())));
