@@ -2,6 +2,7 @@
   const RPC_ENDPOINTS = ['https://solana-rpc.publicnode.com', 'https://api.mainnet-beta.solana.com'];
   const BASE = ['/ohmoon', '/OHMOON'].find(base => location.pathname === base || location.pathname.startsWith(`${base}/`)) || '';
   const OHMOON_LOGO = `${BASE}/assets/ohmoon-logo-transparent.png`;
+  const OFFICIAL_TOKEN_CA = '';
   const state = { provider: null, account: null, standard: false, address: '', name: '', balance: null };
   const short = (value) => value ? `${value.slice(0, 4)}...${value.slice(-4)}` : '';
   const brandIcons = {
@@ -17,6 +18,16 @@
     ].filter(([, provider]) => provider?.connect).map(([name, provider]) => ({ name, icon: brandIcons[name] || '', provider, standard: false }));
     return [...standard, ...legacy].filter((entry, index, all) => all.findIndex(item => item.name.toLowerCase() === entry.name.toLowerCase()) === index);
   };
+
+  function mountCaBanner() {
+    const topbar = document.querySelector('.topbar');
+    if (!topbar || document.querySelector('.ca-banner')) return;
+    const ready = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(OFFICIAL_TOKEN_CA);
+    const banner = document.createElement('div'); banner.className = `ca-banner${ready ? ' is-live' : ''}`;
+    banner.innerHTML = `<span><i></i> OFFICIAL OHMOON TOKEN</span><b>CA</b><button type="button" ${ready ? '' : 'disabled'}>${ready ? OFFICIAL_TOKEN_CA : 'TBA'}</button><small>${ready ? 'CLICK TO COPY' : 'PUBLISHES AFTER OFFICIAL LAUNCH'}</small>`;
+    topbar.insertAdjacentElement('afterend', banner);
+    if (ready) banner.querySelector('button').onclick = async () => { await navigator.clipboard.writeText(OFFICIAL_TOKEN_CA); toast('Official OhMoon CA copied.', 'success'); };
+  }
 
   function toast(message, kind = '') {
     let node = document.querySelector('.om-toast');
@@ -196,6 +207,7 @@
   });
   window.OhMoonWallet = { state, connect, disconnect, signMessage, trade, createCoin, rpc, toast, short };
   window.addEventListener('DOMContentLoaded', async () => {
+    mountCaBanner();
     const remembered = localStorage.getItem('ohmoon-wallet');
     const match = providers().find(entry => entry.name === remembered);
     if (match) { try { await useProvider(match, { onlyIfTrusted: true }); } catch {} }
