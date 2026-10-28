@@ -1,8 +1,8 @@
-const CACHE = 'ohmoon-shell-v5';
+const CACHE = 'ohmoon-shell-v6';
 const BASE = new URL(self.registration.scope).pathname.replace(/\/$/, '');
 const SHELL = [
   '/', '/live/', '/calls/', '/burns/', '/launch/', '/how/', '/trade/',
-  '/ohmoon.css', '/wallet.css', '/project-detail.css', '/ohmoon.js', '/wallet.js', '/live-data.js', '/project-detail.js',
+  '/official.css', '/official.js', '/concept/concept.css', '/ohmoon.css', '/wallet.css', '/project-detail.css', '/ohmoon.js', '/wallet.js', '/live-data.js', '/project-detail.js',
   '/assets/ohmoon-logo-transparent.png', '/assets/projects/token-placeholder.svg', '/vendor/solana-web3.min.js', '/vendor/wallet-standard.min.js'
 ].map(path => `${BASE}${path}`);
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting())));

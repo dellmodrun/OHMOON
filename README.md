@@ -1,6 +1,6 @@
 ﻿# OhMoon
 
-OhMoon is a live Pump.fun discovery, launch and trading interface for Solana.
+OhMoon is the survival layer for Pump.fun launches: a Solana launch, discovery and trading interface built around a transparent long-term reward curve.
 
 ## Local development
 
