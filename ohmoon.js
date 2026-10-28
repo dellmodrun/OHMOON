@@ -59,7 +59,7 @@
     $$('.xlink').forEach(link => {
       link.classList.add('om-xlink'); link.setAttribute('aria-label', 'Follow OhMoon on X'); link.title = 'Follow @ohmoonlaunch on X'; link.href = 'https://x.com/ohmoonlaunch'; link.target = '_blank'; link.rel = 'noreferrer';
       link.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>';
-      if (!link.previousElementSibling?.classList.contains('om-ca-panel')) { const ca = document.createElement('div'); ca.className = 'om-ca-panel'; ca.innerHTML = '<span>OFFICIAL TOKEN</span><strong>$OHMOON</strong><code>CA · 51tzcYGu2xEi6gf5sytrF8UbheQM9SNvQLNqD84Hpump</code>'; link.before(ca); }
+      if (!link.previousElementSibling?.classList.contains('om-ca-panel')) { const ca = document.createElement('div'); ca.className = 'om-ca-panel'; ca.innerHTML = '<span>OFFICIAL TOKEN</span><strong>$OHMOON</strong><code>CA · TBA</code>'; link.before(ca); }
     });
     $$('.wchip-cta,.wtab').forEach(button => { button.textContent = 'Connect wallet'; button.setAttribute('aria-label', 'Connect Solana wallet'); });
     document.documentElement.classList.add('ohmoon-ready');
