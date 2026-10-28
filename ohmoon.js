@@ -1,6 +1,6 @@
 (() => {
   const BASE = ['/ohmoon', '/OHMOON'].find(base => location.pathname === base || location.pathname.startsWith(`${base}/`)) || '';
-  const LOGO = `${BASE}/assets/ohmoon-logo.png`;
+  const LOGO = `${BASE}/assets/ohmoon-logo-transparent.png`;
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
