@@ -2,6 +2,11 @@
   const root = document.querySelector('[data-project]'), canvas = document.querySelector('#pd-chart');
   if (!root || !canvas) return;
   const BASE = ['/ohmoon', '/OHMOON'].find(base => location.pathname === base || location.pathname.startsWith(`${base}/`)) || '';
+  document.body.classList.add('official-trade');
+  if (!document.querySelector('link[data-official-route]')) { const style=document.createElement('link');style.rel='stylesheet';style.href=`${BASE}/route-unify.css?v=2`;style.dataset.officialRoute='true';document.head.appendChild(style); }
+  document.title = 'OhMoon — Live market';
+  const navIcons=['<path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/>','<path d="M4 16.5c2.2-6 5-9 8-9s5.8 3 8 9"/><path d="M7 16.5h10"/>','<path d="M4 17 9 12l3 3 8-9"/><path d="M15 6h5v5"/>','<path d="M4 12h3l2-5 4 10 2-5h5"/>','<path d="M12 5v14M5 12h14"/>','<circle cx="12" cy="12" r="8"/><path d="M9.8 9.5a2.3 2.3 0 0 1 4.4 1c0 1.8-2.2 2-2.2 3.5M12 17h.01"/>'];
+  document.querySelectorAll('.pd-nav a').forEach((a,i)=>a.insertAdjacentHTML('afterbegin',`<svg class="route-nav-icon" viewBox="0 0 24 24">${navIcons[i]||navIcons[0]}</svg>`));
   const params = new URLSearchParams(location.search);
   const mint = params.get('mint') || root.dataset.mint || '';
   if (!mint) { location.replace(`${BASE}/`); return; }
