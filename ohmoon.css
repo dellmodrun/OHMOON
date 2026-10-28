@@ -30,6 +30,8 @@ body{background-color:#fce603!important;background-image:linear-gradient(rgba(1,
 .hp-say,.lart-bubble{background:#010100!important;color:#fce603!important;border-color:#010100!important}
 .hp-mascot,.lart-img{object-fit:contain!important;filter:drop-shadow(0 24px 25px rgba(0,0,0,.4))!important}
 .hp-mascot{transform:scale(1.18)!important}
+.hstat-ic:has(img.mark){background:transparent!important;border:0!important;border-radius:0!important}
+.hstat-ic:has(img.mark) img.mark{width:32px!important;height:32px!important;object-fit:contain!important}
 .hp-stage .hp-coin{display:none!important}
 .hp-shadow{background:radial-gradient(ellipse,rgba(183,98,253,.28),transparent 70%)!important}
 .pb-fill,.lc-fill{background:linear-gradient(90deg,#6f20b5,#d594ff)!important}

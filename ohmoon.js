@@ -10,7 +10,7 @@
     const description = $('meta[name="description"]');
     if (description) description.content = 'OhMoon is a live Pump.fun launch, trading and market operations workspace.';
     $$('link[rel="icon"],link[rel="shortcut icon"]').forEach(link => link.remove());
-    const favicon = document.createElement('link'); favicon.rel = 'icon'; favicon.type = 'image/png'; favicon.href = `${BASE}/assets/ohmoon-logo.png?v=6`; document.head.appendChild(favicon);
+    const favicon = document.createElement('link'); favicon.rel = 'icon'; favicon.type = 'image/png'; favicon.href = `${BASE}/assets/ohmoon-logo-transparent.png?v=6`; document.head.appendChild(favicon);
     $$('.brand,.tn-brand').forEach(brand => { brand.setAttribute('aria-label', 'OhMoon'); brand.innerHTML = `<img class="mark" src="${LOGO}" alt="OhMoon"><span class="ohmoon-word">OhMoon</span>`; });
     $$('.xlink').forEach(link => {
       link.classList.add('om-xlink'); link.setAttribute('aria-label', 'Follow OhMoon on X'); link.title = 'Follow @onemoruntime on X'; link.href = 'https://x.com/onemoruntime'; link.target = '_blank'; link.rel = 'noreferrer';
