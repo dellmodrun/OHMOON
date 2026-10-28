@@ -20,7 +20,7 @@
     };
     $$('.sidenav .sidelink').forEach(link => { const label=link.textContent.trim().toLowerCase(); if(paths[label]&&!link.querySelector('svg')) link.insertAdjacentHTML('afterbegin',`<svg class="route-nav-icon" viewBox="0 0 24 24">${paths[label]}</svg>`); if(label==='workspace'&&link.lastChild)link.lastChild.textContent=' Launch a coin'; if(label==='project board'&&link.lastChild)link.lastChild.textContent=' Home'; });
     $$('.tn-links a,.tabbar a').forEach(link=>{const label=link.textContent.trim().toLowerCase();if(label==='workspace')link.textContent='launch';if(label==='project board')link.textContent='home'});
-    const sideCta=$('.side>.btn.btn-big');if(sideCta)sideCta.textContent='Launch a coin';
+    const sideCta=$('.side>.btn.btn-big');if(sideCta){sideCta.textContent='Follow on X ↗';sideCta.href='https://x.com/ohmoonlaunch';sideCta.target='_blank';sideCta.rel='noreferrer';}
   }
 
   function rewriteConcept() {
