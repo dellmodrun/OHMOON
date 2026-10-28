@@ -2,7 +2,7 @@
   "name": "ohmoon",
   "version": "0.1.0",
   "private": true,
-  "description": "Pump.fun launches with creator rewards that unlock over time.",
+  "description": "A modular genesis layer for tokens launching into Pump.fun.",
   "scripts": {
     "start": "node server.cjs"
   },
