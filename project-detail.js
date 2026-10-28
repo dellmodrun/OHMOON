@@ -1,7 +1,7 @@
 ﻿(() => {
   const root = document.querySelector('[data-project]'), canvas = document.querySelector('#pd-chart');
   if (!root || !canvas) return;
-  const BASE = location.pathname.startsWith('/onemod') ? '/onemod' : '';
+  const BASE = ['/onemod', '/OHMOON'].find(base => location.pathname === base || location.pathname.startsWith(`${base}/`)) || '';
   const params = new URLSearchParams(location.search);
   const mint = params.get('mint') || root.dataset.mint || '';
   if (!mint) { location.replace(`${BASE}/`); return; }

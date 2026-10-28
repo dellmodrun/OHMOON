@@ -1,5 +1,5 @@
 (() => {
-  const BASE = location.pathname.startsWith('/onemod') ? '/onemod' : '';
+  const BASE = ['/onemod', '/OHMOON'].find(base => location.pathname === base || location.pathname.startsWith(`${base}/`)) || '';
   const KEY = 'onemod-live-projects-v2';
   const LEGACY_KEY = 'onemod-live-projects-v1';
   const PLACEHOLDER = `${BASE}/assets/projects/token-placeholder.svg`;
