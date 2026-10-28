@@ -2,7 +2,7 @@ name: Refresh live Pump.fun feed
 
 on:
   schedule:
-    - cron: '7 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -10,12 +10,12 @@ permissions:
 
 concurrency:
   group: ohmoon-live-feed
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,7 +24,8 @@ jobs:
       - name: Capture public creation events
         run: node scripts/capture-live.cjs
         env:
-          CAPTURE_MS: '120000'
+          CAPTURE_MS: '270000'
+          PUMPPORTAL_API_KEY: ${{ secrets.PUMPPORTAL_API_KEY }}
       - name: Publish updated feed
         run: |
           if git diff --quiet -- feed/live-projects.json; then exit 0; fi

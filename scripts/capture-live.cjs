@@ -6,6 +6,46 @@ const duration = Math.max(5000, Number(process.env.CAPTURE_MS || 120000));
 let previous = [];
 try { previous = JSON.parse(fs.readFileSync(output, 'utf8')); } catch {}
 const incoming = [];
+const isPumpCreation = item => Boolean(
+  item &&
+  item.txType === 'create' &&
+  item.pool === 'pump' &&
+  typeof item.mint === 'string' && item.mint.length >= 32 &&
+  ((typeof item.signature === 'string' && item.signature.length >= 64 && typeof item.bondingCurveKey === 'string' && item.bondingCurveKey.length >= 32) || item.source === 'pumpfun:latest')
+);
+const normalizeLatest = item => ({
+  mint:item.mint,
+  traderPublicKey:item.creator || '',
+  txType:'create',
+  pool:'pump',
+  source:'pumpfun:latest',
+  name:item.name || 'Unknown',
+  symbol:item.symbol || 'TOKEN',
+  uri:item.metadata_uri || item.uri || '',
+  image:item.image_uri || item.image || '',
+  description:item.description || '',
+  twitter:item.twitter || '',
+  website:item.website || '',
+  marketCapUsd:Number(item.usd_market_cap || item.market_cap || 0) || null,
+  marketCapSol:Number(item.market_cap || 0) || null,
+  seenAt:(value => value > 0 && value < 1e12 ? value * 1000 : value || Date.now())(Number(item.created_timestamp || item.createdAt || 0))
+});
+async function recentPumpfun() {
+  const endpoints = [
+    'https://frontend-api-v3.pump.fun/coins/latest?offset=0&limit=100&includeNsfw=false',
+    'https://frontend-api-v3.pump.fun/coins?offset=0&limit=100&sort=created_timestamp&order=DESC&includeNsfw=false'
+  ];
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint, { headers:{ accept:'application/json', 'user-agent':'OhMoon/1.0' }, signal:AbortSignal.timeout(12000) });
+      if (!response.ok) continue;
+      const body = await response.json(), rows = Array.isArray(body) ? body : body?.data || body?.coins || [];
+      const normalized = rows.map(normalizeLatest).filter(isPumpCreation);
+      if (normalized.length) return normalized;
+    } catch {}
+  }
+  return [];
+}
 const SOL_MINT = 'So11111111111111111111111111111111111111112';
 const ipfs = value => {
   const cid = String(value || '').match(/(?:ipfs:\/\/|\/ipfs\/)([^?#]+)/)?.[1];
@@ -47,16 +87,24 @@ async function cacheImages(items) {
     } catch { return { ...item, localImage:'' }; }
   }));
 }
-const socket = new WebSocket('wss://pumpportal.fun/api/data');
+const apiKey = String(process.env.PUMPPORTAL_API_KEY || '').trim();
+const socketUrl = `wss://pumpportal.fun/api/data${apiKey ? `?api-key=${encodeURIComponent(apiKey)}` : ''}`;
+const latestPromise = recentPumpfun();
+const socket = new WebSocket(socketUrl);
 socket.addEventListener('open', () => socket.send(JSON.stringify({ method: 'subscribeNewToken' })));
 socket.addEventListener('message', event => {
-  try { const item = JSON.parse(event.data); if (item?.mint && item.txType === 'create') incoming.push({ ...item, seenAt: Date.now() }); } catch {}
+  try { const item = JSON.parse(event.data); if (isPumpCreation(item)) incoming.push({ ...item, source:'pumpportal:new-token', seenAt:Date.now() }); } catch {}
 });
 socket.addEventListener('error', event => console.error('Live feed socket error', event.message || 'connection failed'));
 setTimeout(async () => {
   socket.close();
-  const seen = new Set(), merged = [...incoming.reverse(), ...previous].filter(item => { if (!item?.mint) return false; const identity = `${item.traderPublicKey || ''}|${item.name || ''}|${item.symbol || ''}`.toLowerCase(); if (seen.has(item.mint) || seen.has(identity)) return false; seen.add(item.mint); seen.add(identity); return true; }).slice(0, 100);
+  const recent = await latestPromise;
+  const seen = new Set(), merged = [...incoming.reverse(), ...recent, ...previous]
+    .filter(isPumpCreation)
+    .sort((a, b) => Number(b.seenAt || 0) - Number(a.seenAt || 0))
+    .filter(item => { if (seen.has(item.mint)) return false; seen.add(item.mint); return true; })
+    .slice(0, 100);
   const enriched = await cacheImages(await market(await Promise.all(merged.map(metadata))));
   fs.writeFileSync(output, JSON.stringify(enriched, null, 2) + '\n');
-  console.log(`Saved ${enriched.length} verified Pump.fun creation events (${incoming.length} new).`);
+  console.log(`Saved ${enriched.length} Pump.fun creation events (${incoming.length} streamed, ${recent.length} recent-API).`);
 }, duration);
