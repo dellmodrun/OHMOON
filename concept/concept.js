@@ -1,11 +1,11 @@
 const featured=[
- {name:'Mooncat',ticker:'MOONCAT',day:46,mcap:'$3.8M',volume:'$920K',change:'+142%',unlock:50,color:'#43e2ad',icon:'MC'},
+ {name:'Mooncat',ticker:'MOONCAT',day:46,mcap:'$3.8M',volume:'$920K',change:'+142%',unlock:50,color:'#b44cff',icon:'MC'},
  {name:'Lunar Club',ticker:'LUNAR',day:91,mcap:'$2.1M',volume:'$481K',change:'+89%',unlock:100,color:'#ffe13e',icon:'LC'},
- {name:'Orbital',ticker:'ORBIT',day:18,mcap:'$884K',volume:'$216K',change:'+62%',unlock:20,color:'#58b9ff',icon:'OR'}
+ {name:'Orbital',ticker:'ORBIT',day:18,mcap:'$884K',volume:'$216K',change:'+62%',unlock:20,color:'#ff9238',icon:'OR'}
 ];
 const coins=[
- ['Mooncat','MOONCAT',46,'$3.8M','+142%',50,'proven','#43e2ad'],['Lunar Club','LUNAR',91,'$2.1M','+89%',100,'matured','#ffe13e'],['Orbital','ORBIT',18,'$884K','+62%',20,'alive','#58b9ff'],['Spark Plug','SPARK',31,'$1.2M','+34%',50,'proven','#ff9f43'],
- ['Cosmic Dust','DUST',8,'$420K','+18%',20,'alive','#bb8cff'],['Moon Beam','BEAM',16,'$320K','+11%',20,'alive','#48d7d1'],['Crater Kid','CRATER',3,'$189K','+8%',0,'newborn','#f87d84'],['Night Shift','NIGHT',1,'$92K','+4%',0,'newborn','#a8c46b'],
+ ['Mooncat','MOONCAT',46,'$3.8M','+142%',50,'proven','#b44cff'],['Lunar Club','LUNAR',91,'$2.1M','+89%',100,'matured','#ffe13e'],['Orbital','ORBIT',18,'$884K','+62%',20,'alive','#ff9238'],['Spark Plug','SPARK',31,'$1.2M','+34%',50,'proven','#dc78ff'],
+ ['Cosmic Dust','DUST',8,'$420K','+18%',20,'alive','#8e5cff'],['Moon Beam','BEAM',16,'$320K','+11%',20,'alive','#ffb52d'],['Crater Kid','CRATER',3,'$189K','+8%',0,'newborn','#ff668b'],['Night Shift','NIGHT',1,'$92K','+4%',0,'newborn','#c86bff'],
  ['Apollo Dog','APOLLO',67,'$1.6M','+73%',50,'proven','#faad5a'],['Zero Gravity','ZERO',7,'$274K','+16%',20,'alive','#70a5ff'],['Moon Milk','MILK',94,'$986K','+41%',100,'matured','#f5f0dc'],['Satellite','SAT',24,'$533K','+29%',20,'alive','#6ed79d']
 ].map(c=>({name:c[0],ticker:c[1],day:c[2],mcap:c[3],change:c[4],unlock:c[5],stage:c[6],color:c[7]}));
 const featuredGrid=document.querySelector('#featuredGrid');
@@ -18,3 +18,4 @@ document.querySelector('#boardSearch').addEventListener('input',renderBoard);doc
 document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();document.querySelector('#globalSearch').focus()}});
 const sidebar=document.querySelector('#sidebar'),shade=document.querySelector('#mobileShade');document.querySelector('#menuBtn').addEventListener('click',()=>{sidebar.classList.add('open');shade.classList.add('show')});shade.addEventListener('click',()=>{sidebar.classList.remove('open');shade.classList.remove('show')});
 document.querySelectorAll('.wallet-btn').forEach(btn=>btn.addEventListener('click',()=>{btn.textContent='Wallet preview';setTimeout(()=>btn.textContent=btn.closest('.top-actions')?'Connect':'Connect wallet',1500)}));
+document.querySelectorAll('.source-row button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelector('.source-row .active').classList.remove('active');btn.classList.add('active')}));
