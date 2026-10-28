@@ -2,7 +2,7 @@
   "name": "ohmoon",
   "version": "0.1.0",
   "private": true,
-  "description": "A modular genesis layer for tokens launching into Pump.fun.",
+  "description": "OhMoon is the survival layer for Pump.fun launches.",
   "scripts": {
     "start": "node server.cjs"
   },

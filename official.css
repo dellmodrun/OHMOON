@@ -15,6 +15,8 @@
 /* Precision pass: tighter market cards, a true bounded treemap and calmer surfaces. */
 .official .sidebar{box-shadow:4px 0 0 #ad45f5}
 .official .side-launch.side-x{display:flex;align-items:center;justify-content:space-between;background:#111013;color:#fff}
+.official .side-launch.side-primary{display:flex;align-items:center;justify-content:space-between;background:#b44cff;color:#fff;border-color:#111013;box-shadow:2px 2px 0 #111013}
+.official .side-launch.side-primary:hover{background:#9634d8;transform:translateY(-1px)}
 .official .side-launch.side-x:before{content:"X";display:grid;place-items:center;width:18px;height:18px;margin-right:8px;border-radius:50%;background:#fff;color:#111013;font:700 9px Arial}
 .official .panel,.official .board-card,.official .level{box-shadow:2px 2px 0 #111013}
 .official .featured-grid{border-radius:8px}
