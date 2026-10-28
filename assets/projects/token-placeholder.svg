@@ -1,10 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
-  <title id="title">Token image unavailable</title>
-  <desc id="desc">Neutral placeholder used when a token has no verified image.</desc>
-  <rect width="320" height="320" rx="42" fill="#f0ead7"/>
-  <path d="M80 104 160 58l80 46v112l-80 46-80-46Z" fill="#fffaf0" stroke="#20231f" stroke-width="12" stroke-linejoin="round"/>
-  <path d="M80 104 160 150l80-46M160 150v112" fill="none" stroke="#17644f" stroke-width="10" stroke-linejoin="round"/>
-  <circle cx="160" cy="150" r="18" fill="#2ca985" stroke="#20231f" stroke-width="8"/>
-  <path d="M132 206h56" stroke="#20231f" stroke-width="10" stroke-linecap="round"/>
-  <text x="160" y="296" fill="#625f54" font-family="monospace" font-size="15" font-weight="700" letter-spacing="2" text-anchor="middle">IMAGE PENDING</text>
+  <title id="title">OhMoon token artwork pending</title>
+  <desc id="desc">OhMoon branded placeholder shown while token artwork is unavailable.</desc>
+  <defs>
+    <radialGradient id="space" cx="50%" cy="36%" r="78%">
+      <stop offset="0" stop-color="#382044"/>
+      <stop offset=".58" stop-color="#171019"/>
+      <stop offset="1" stop-color="#0a080b"/>
+    </radialGradient>
+    <linearGradient id="moon" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#fff58a"/>
+      <stop offset=".52" stop-color="#ffe500"/>
+      <stop offset="1" stop-color="#d2ac00"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="320" rx="38" fill="url(#space)"/>
+  <circle cx="53" cy="58" r="3" fill="#ffe500"/>
+  <circle cx="257" cy="69" r="5" fill="#b44cff"/>
+  <circle cx="274" cy="151" r="2.5" fill="#ffe500"/>
+  <path d="M36 182c54-48 194-58 248 3" fill="none" stroke="#b44cff" stroke-width="4" opacity=".72"/>
+  <circle cx="160" cy="145" r="82" fill="url(#moon)" stroke="#111013" stroke-width="9"/>
+  <ellipse cx="124" cy="116" rx="19" ry="11" fill="#c9a700" opacity=".65"/>
+  <ellipse cx="184" cy="173" rx="24" ry="14" fill="#c9a700" opacity=".58"/>
+  <ellipse cx="191" cy="105" rx="11" ry="7" fill="#fff9b8" opacity=".75"/>
+  <path d="M107 177l36-36 24 24 48-54" fill="none" stroke="#111013" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M184 111h31v31" fill="none" stroke="#111013" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M35 238h250" stroke="#4a3a4f"/>
+  <text x="160" y="267" fill="#ffe500" font-family="Arial, sans-serif" font-size="22" font-weight="800" letter-spacing="3" text-anchor="middle">OHMOON</text>
+  <text x="160" y="289" fill="#bcaec0" font-family="monospace" font-size="9" font-weight="700" letter-spacing="2" text-anchor="middle">ARTWORK PENDING</text>
 </svg>

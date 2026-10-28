@@ -21,7 +21,8 @@
   const short = value => value ? `${value.slice(0,4)}...${value.slice(-4)}` : 'unknown';
   const money = value => { const amount = Number(value); return Number.isFinite(amount) && amount > 0 ? amount.toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:amount >= 100 ? 0 : 2}) : 'loading'; };
   const marketCapUsd = () => { const stored = Number(token?.marketCapUsd || 0); if (stored > 0) return stored; const curve = Number(token?.marketCapSol || 0); return curve > 0 && solUsd > 0 ? curve * solUsd : 0; };
-  const tokenImage = () => token?.localImage ? `${BASE}/${String(token.localImage).replace(/^\/+/, '')}` : token?.marketImage || token?.image || `${BASE}/assets/projects/token-placeholder.svg`;
+  const FALLBACK_IMAGE = `${BASE}/assets/projects/token-placeholder.svg`;
+  const tokenImages = () => { const list=[]; if(token?.localImage)list.push(`${BASE}/${String(token.localImage).replace(/^\/+/, '')}`); [token?.marketImage,token?.image].filter(Boolean).forEach(value=>{list.push(value);const cid=String(value).match(/(?:ipfs:\/\/|\/ipfs\/)([^?#]+)/)?.[1];if(cid)list.push(`https://gateway.pinata.cloud/ipfs/${cid}`,`https://ipfs.io/ipfs/${cid}`,`https://${cid}.ipfs.dweb.link`)}); return [...new Set([...list,FALLBACK_IMAGE])]; };
   async function cachedJson(key,url,ttl=60000){let cached=null;try{cached=JSON.parse(localStorage.getItem(`ohmoon-cache:${key}`)||'null');if(cached&&Date.now()-cached.savedAt<ttl)return cached.data;}catch{}try{const response=await fetch(url,{headers:{Accept:'application/json;version=20230203'}});if(!response.ok)throw new Error(`${response.status}`);const data=await response.json();try{localStorage.setItem(`ohmoon-cache:${key}`,JSON.stringify({savedAt:Date.now(),data}));}catch{}return data;}catch(error){if(cached?.data)return cached.data;throw error;}}
 
   function hydrateIdentity() {
@@ -31,7 +32,7 @@
     const title = document.querySelector('.pd-id h1'); if (title) title.innerHTML = `${name} <span class="pd-up">$${ticker}</span>`;
     const desc = document.querySelector('.pd-id p'); if (desc) desc.textContent = token?.description || `Live Pump.fun market ${mint}`;
     const profile = document.querySelector('.pd-profile p'); if (profile) profile.textContent = token?.description || `Live Pump.fun market ${mint}`;
-    const art = document.querySelector('.pd-coin-mark img'); if (art) { art.onerror = () => { art.onerror = null; art.src = `${BASE}/assets/projects/token-placeholder.svg`; }; art.src = tokenImage(); art.alt = `${ticker} token artwork`; }
+    const art = document.querySelector('.pd-coin-mark img'); if (art) { const images=tokenImages();let imageIndex=0;art.onerror=()=>{imageIndex+=1;if(imageIndex<images.length)art.src=images[imageIndex];else art.onerror=null};art.src=images[0];art.alt=`${ticker} token artwork`; }
     const cap = document.querySelector('.pd-head-price b'); if (cap && !poolAddress) cap.textContent = money(marketCapUsd());
     const change = document.querySelector('.pd-head-price div'); if (change && !poolAddress) change.textContent = 'LIVE | Pump.fun';
     const pair = document.querySelector('.pd-chart-card h2'); if (pair) pair.textContent = `$${ticker} / SOL${poolAddress?' · GeckoTerminal':''}`;
