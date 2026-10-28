@@ -179,6 +179,12 @@
     if ('serviceWorker' in navigator) navigator.serviceWorker.register(`${BASE}/sw.js`, { scope: `${BASE}/` }).catch(() => {});
   }
 
-  function init() { setBrand(); unifyShell(); rewriteConcept(); bindLooks(); bindLaunchForm(); bindSearch(); bindInstall(); cleanDecorativeControls(); registerApp(); }
+  function init() {
+    if (document.body.classList.contains('product-page')) {
+      bindLaunchForm(); bindInstall(); cleanDecorativeControls(); registerApp();
+      return;
+    }
+    setBrand(); unifyShell(); rewriteConcept(); bindLooks(); bindLaunchForm(); bindSearch(); bindInstall(); cleanDecorativeControls(); registerApp();
+  }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true }); else init();
 })();
