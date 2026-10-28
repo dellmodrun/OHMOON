@@ -33,6 +33,8 @@
 .official .market-map .map-cell.map-lead{grid-column:span 2!important;grid-row:span 2!important}
 .official .market-map .map-cell.map-wide{grid-column:span 2!important}
 .official .market-map .map-cell.map-tall{grid-row:span 2!important;flex-direction:column;text-align:center}
+.official .market-map .map-cell:nth-child(1){grid-area:a!important}.official .market-map .map-cell:nth-child(2){grid-area:b!important}.official .market-map .map-cell:nth-child(3){grid-area:c!important}.official .market-map .map-cell:nth-child(4){grid-area:d!important}.official .market-map .map-cell:nth-child(5){grid-area:e!important}.official .market-map .map-cell:nth-child(6){grid-area:f!important}.official .market-map .map-cell:nth-child(7){grid-area:g!important}.official .market-map .map-cell:nth-child(8){grid-area:h!important}.official .market-map .map-cell:nth-child(9){grid-area:i!important}.official .market-map .map-cell:nth-child(10){grid-area:j!important}.official .market-map .map-cell:nth-child(11){grid-area:k!important}.official .market-map .map-cell:nth-child(12){grid-area:l!important}.official .market-map .map-cell:nth-child(13){grid-area:m!important}.official .market-map .map-cell:nth-child(14){grid-area:n!important}.official .market-map .map-cell:nth-child(15){grid-area:o!important}
+.official .market-map{grid-template-areas:"a a b b c d" "a a e f c g" "h h i j k l" "m n o o k l"}
 .official .market-map .map-cell:after{content:none}
 .official .market-map .map-token-image{position:relative;inset:auto;z-index:2;flex:0 0 auto;width:38px;height:38px;margin:0;border:1.5px solid rgba(255,255,255,.85);border-radius:50%;object-fit:cover;box-shadow:0 3px 10px rgba(0,0,0,.24)}
 .official .market-map .map-lead .map-token-image{width:70px;height:70px}
@@ -53,7 +55,8 @@
 .official .unlock-curve,.official .protocol-callout{box-shadow:3px 3px 0 #ad45f5}
 @media(max-width:760px){
   .official .featured-card{width:190px;min-height:150px}.official .featured-art{height:91px}
-  .official .market-map{height:auto;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:92px}
+  .official .market-map{height:auto;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-template-areas:none;grid-auto-rows:92px}
+  .official .market-map .map-cell{grid-area:auto!important}
   .official .market-map .map-cell.map-lead{grid-column:span 2!important;grid-row:span 2!important}
   .official .market-map .map-cell.map-wide{grid-column:span 2!important}
   .official .market-map .map-cell.map-tall{grid-row:auto!important;flex-direction:row;text-align:left}

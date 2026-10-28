@@ -28,6 +28,6 @@
   document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();$('#globalSearch').focus()}});
   const sidebar=$('#sidebar'),shade=$('#mobileShade');$('#menuBtn').addEventListener('click',()=>{sidebar.classList.add('open');shade.classList.add('show')});shade.addEventListener('click',()=>{sidebar.classList.remove('open');shade.classList.remove('show')});sidebar.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{sidebar.classList.remove('open');shade.classList.remove('show')}));
   const board=$('#board'),ladder=$('#ladder');if(board&&ladder)ladder.before(board)
-  if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register(`${BASE}/sw.js`).catch(()=>{}));
+  if('serviceWorker'in navigator)window.addEventListener('load',async()=>{for(const registration of await navigator.serviceWorker.getRegistrations())await registration.unregister();if('caches'in window)for(const key of await caches.keys())if(key.startsWith('ohmoon-shell-'))await caches.delete(key)});
   load();setInterval(load,60000);
 })();
