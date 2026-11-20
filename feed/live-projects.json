@@ -23,12 +23,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2014.0802462291826,
-    "marketSource": "curve",
-    "volumeUsd24h": 0,
-    "priceUsd": null,
+    "marketCapUsd": 2009.9999999999998,
+    "marketSource": "market",
+    "volumeUsd24h": 0.07,
+    "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -55,12 +55,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2014.0802462291826,
-    "marketSource": "curve",
-    "volumeUsd24h": 0,
-    "priceUsd": null,
+    "marketCapUsd": 2009.9999999999998,
+    "marketSource": "market",
+    "volumeUsd24h": 0.07,
+    "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -87,12 +87,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2014.0802462291826,
-    "marketSource": "curve",
-    "volumeUsd24h": 0,
-    "priceUsd": null,
+    "marketCapUsd": 2009.9999999999998,
+    "marketSource": "market",
+    "volumeUsd24h": 0.07,
+    "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -119,12 +119,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2014.0802462291826,
-    "marketSource": "curve",
-    "volumeUsd24h": 0,
-    "priceUsd": null,
+    "marketCapUsd": 2009.9999999999998,
+    "marketSource": "market",
+    "volumeUsd24h": 0.07,
+    "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -151,12 +151,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2014.0802462291826,
-    "marketSource": "curve",
-    "volumeUsd24h": 0,
-    "priceUsd": null,
+    "marketCapUsd": 2009.9999999999998,
+    "marketSource": "market",
+    "volumeUsd24h": 0.07,
+    "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -183,12 +183,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2014.0802462291826,
-    "marketSource": "curve",
-    "volumeUsd24h": 0,
-    "priceUsd": null,
+    "marketCapUsd": 2009.9999999999998,
+    "marketSource": "market",
+    "volumeUsd24h": 0.07,
+    "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -215,12 +215,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2099,
+    "marketCapUsd": 2004.0000000000002,
     "marketSource": "market",
-    "volumeUsd24h": 47.57,
-    "priceUsd": "0.000002099",
+    "volumeUsd24h": 113.72,
+    "priceUsd": "0.000002004",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -247,12 +247,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2128,
+    "marketCapUsd": 2001,
     "marketSource": "market",
-    "volumeUsd24h": 62.49,
-    "priceUsd": "0.000002128",
+    "volumeUsd24h": 730.14,
+    "priceUsd": "0.000002001",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -279,12 +279,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2024,
+    "marketCapUsd": 2034,
     "marketSource": "market",
-    "volumeUsd24h": 7.83,
-    "priceUsd": "0.000002024",
+    "volumeUsd24h": 15.76,
+    "priceUsd": "0.000002034",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -305,13 +305,19 @@
     "pool": "pump",
     "source": "pumpportal:new-token",
     "seenAt": 1795140462006,
-    "marketCapUsd": 2114,
+    "marketCapUsd": 2018,
     "marketSource": "market",
-    "volumeUsd24h": 225.81,
-    "priceUsd": "0.000002114",
+    "volumeUsd24h": 352.44,
+    "priceUsd": "0.000002018",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
-    "localImage": ""
+    "marketUpdatedAt": 1795168857425,
+    "localImage": "",
+    "image": "https://gateway.pinata.cloud/ipfs/bafkreifntlob3a2q432uc5h2xhouopzwctbma65d57jgy5d2djtutqi44q",
+    "description": "$PATA is a community token built to help abandoned dogs and cats in Portugal 🐾\nPart of the creator fees goes to a public donation wallet, gets converted to euros and donated to União Zoófila, a Lisbon shelter that’s been rescuing and caring for animals for 70+ years.\nEvery donation gets posted with proof. No promises of profit, just the community helping those who can’t speak for themselves.\n",
+    "twitter": "https://x.com/UniaoZOo",
+    "website": "https://www.uniaozoofila.org/",
+    "platform": "",
+    "metadataLoaded": true
   },
   {
     "signature": "3zga4CRdU1LJmNxfJ1Zgtp4UrP88XXihujUos5v2vBDgX3foRhrMHi1NTcN1JGwcSk9vZ3BWYX9MDnNiHeLKVvqK",
@@ -337,12 +343,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2020.0000000000002,
+    "marketCapUsd": 2042,
     "marketSource": "market",
-    "volumeUsd24h": 5.68,
-    "priceUsd": "0.000002020",
+    "volumeUsd24h": 17.15,
+    "priceUsd": "0.000002042",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -369,12 +375,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 5743,
+    "marketCapUsd": 5746,
     "marketSource": "market",
-    "volumeUsd24h": 13762.06,
-    "priceUsd": "0.000005743",
+    "volumeUsd24h": 13821.02,
+    "priceUsd": "0.000005746",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -401,12 +407,12 @@
     "website": "https://vicemissions.lol/",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2233,
+    "marketCapUsd": 2011,
     "marketSource": "market",
-    "volumeUsd24h": 288.17,
-    "priceUsd": "0.000002233",
+    "volumeUsd24h": 656.41,
+    "priceUsd": "0.000002011",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -438,7 +444,7 @@
     "volumeUsd24h": 4545.17,
     "priceUsd": "0.0000003933",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -470,7 +476,7 @@
     "volumeUsd24h": 653.06,
     "priceUsd": "0.0000005260",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -497,12 +503,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2009.9999999999998,
+    "marketCapUsd": 2031.0000000000002,
     "marketSource": "market",
-    "volumeUsd24h": 639.95,
-    "priceUsd": "0.000002010",
+    "volumeUsd24h": 640.78,
+    "priceUsd": "0.000002031",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -534,7 +540,7 @@
     "volumeUsd24h": 0.07,
     "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -566,7 +572,7 @@
     "volumeUsd24h": 0.07,
     "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -598,7 +604,7 @@
     "volumeUsd24h": 0.07,
     "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -624,8 +630,14 @@
     "volumeUsd24h": 95.15,
     "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
-    "localImage": ""
+    "marketUpdatedAt": 1795168857425,
+    "localImage": "",
+    "image": "https://gateway.pinata.cloud/ipfs/bafybeibmh3wqkbxy6dnkoylme64x56agdpbsyej7pxme7nepg7pyg536lm",
+    "description": "the official pumpfun inu",
+    "twitter": "https://x.com/shibtoken/status/2123448963256741924/photo/1?a=t4767VohfRzYWYiwUmc&s=46",
+    "website": "",
+    "platform": "",
+    "metadataLoaded": true
   },
   {
     "signature": "3MpJyZhzLbhzZQotYhSsgZuj7kA6BwJUFxCTdLCh8pe7awQUYCZqC4CiWWj97TPorVdU2vyMb7xc7h8BNaZgrV6Y",
@@ -656,7 +668,7 @@
     "volumeUsd24h": 0.07,
     "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -688,7 +700,7 @@
     "volumeUsd24h": 0.07,
     "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -720,7 +732,7 @@
     "volumeUsd24h": 0.07,
     "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -752,7 +764,7 @@
     "volumeUsd24h": 0.07,
     "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -784,7 +796,7 @@
     "volumeUsd24h": 0.07,
     "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -816,7 +828,7 @@
     "volumeUsd24h": 0.07,
     "priceUsd": "0.000002010",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -843,12 +855,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2015.9999999999998,
+    "marketCapUsd": 2034,
     "marketSource": "market",
-    "volumeUsd24h": 3.59,
-    "priceUsd": "0.000002016",
+    "volumeUsd24h": 7.23,
+    "priceUsd": "0.000002034",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -869,13 +881,19 @@
     "pool": "pump",
     "source": "pumpportal:new-token",
     "seenAt": 1795140278659,
-    "marketCapUsd": 2087,
+    "marketCapUsd": 2020.9999999999998,
     "marketSource": "market",
-    "volumeUsd24h": 116.78,
-    "priceUsd": "0.000002087",
+    "volumeUsd24h": 158.03,
+    "priceUsd": "0.000002021",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
-    "localImage": ""
+    "marketUpdatedAt": 1795168857425,
+    "localImage": "",
+    "image": "https://gateway.pinata.cloud/ipfs/bafkreiekin47udb3mnjoct3iolcx4a2mgsiuyg4azjv45xjyogpot7eo7e",
+    "description": "",
+    "twitter": "",
+    "website": "",
+    "platform": "",
+    "metadataLoaded": true
   },
   {
     "signature": "2bCLFNFsZyHjooMCQw8ekWN9wa1qNT5vMKJ2jXkbagBGaqNJAVaaupzwWKr3X3PgfrqyFXmnM1Vrt5ccbvgvE5xG",
@@ -906,7 +924,7 @@
     "volumeUsd24h": 1914.36,
     "priceUsd": "0.000002037",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -938,7 +956,7 @@
     "volumeUsd24h": 716.22,
     "priceUsd": "0.000002129",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -970,7 +988,7 @@
     "volumeUsd24h": 172.52,
     "priceUsd": "0.000002035",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1002,7 +1020,7 @@
     "volumeUsd24h": 0.01,
     "priceUsd": "0.000002037",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1034,7 +1052,7 @@
     "volumeUsd24h": 143.88,
     "priceUsd": "0.000002035",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1061,12 +1079,12 @@
     "website": "https://files.catbox.moe/tnbyv5.html",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2013.9476386179067,
+    "marketCapUsd": 2016.440708396313,
     "marketSource": "curve",
     "volumeUsd24h": 0,
     "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1098,7 +1116,7 @@
     "volumeUsd24h": 734.89,
     "priceUsd": "0.0000001135",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1130,7 +1148,7 @@
     "volumeUsd24h": 642.88,
     "priceUsd": "0.000001551",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1162,7 +1180,7 @@
     "volumeUsd24h": 229.11,
     "priceUsd": "0.00000007811",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1194,7 +1212,7 @@
     "volumeUsd24h": 0.01,
     "priceUsd": "0.000002037",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1226,7 +1244,7 @@
     "volumeUsd24h": 8377.45,
     "priceUsd": "0.000002043",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1258,7 +1276,7 @@
     "volumeUsd24h": 40.19,
     "priceUsd": "0.000002032",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1290,7 +1308,7 @@
     "volumeUsd24h": 157.51,
     "priceUsd": "0.000002451",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1322,7 +1340,7 @@
     "volumeUsd24h": 0.07,
     "priceUsd": "0.000002037",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1354,7 +1372,7 @@
     "volumeUsd24h": 0.07,
     "priceUsd": "0.000002037",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1386,7 +1404,7 @@
     "volumeUsd24h": 0.07,
     "priceUsd": "0.000002037",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1418,7 +1436,7 @@
     "volumeUsd24h": 74.91,
     "priceUsd": "0.0000009569",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1445,12 +1463,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2013.9476386179067,
+    "marketCapUsd": 2016.440708396313,
     "marketSource": "curve",
     "volumeUsd24h": 0,
     "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1482,7 +1500,7 @@
     "volumeUsd24h": 1576.43,
     "priceUsd": "0.000002056",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1514,7 +1532,7 @@
     "volumeUsd24h": 1941.96,
     "priceUsd": "0.000002035",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1546,7 +1564,7 @@
     "volumeUsd24h": 444.11,
     "priceUsd": "0.000002745",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1578,7 +1596,7 @@
     "volumeUsd24h": 425.67,
     "priceUsd": "0.00000006883",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1605,12 +1623,12 @@
     "website": "https://files.catbox.moe/g4znkj.html",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2013.9476386179067,
+    "marketCapUsd": 2016.440708396313,
     "marketSource": "curve",
     "volumeUsd24h": 0,
     "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1642,7 +1660,7 @@
     "volumeUsd24h": 143.94,
     "priceUsd": "0.000002037",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1674,7 +1692,7 @@
     "volumeUsd24h": 43.07,
     "priceUsd": "0.000002035",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1706,7 +1724,7 @@
     "volumeUsd24h": 0.01,
     "priceUsd": "0.000002037",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1738,7 +1756,7 @@
     "volumeUsd24h": 26.08,
     "priceUsd": "0.0000004794",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1770,7 +1788,7 @@
     "volumeUsd24h": 16.92,
     "priceUsd": "0.000003276",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1802,7 +1820,7 @@
     "volumeUsd24h": 211.22,
     "priceUsd": "0.000002025",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1834,7 +1852,7 @@
     "volumeUsd24h": 88.57,
     "priceUsd": "0.000002169",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1866,7 +1884,7 @@
     "volumeUsd24h": 546.28,
     "priceUsd": "0.000001592",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1898,7 +1916,7 @@
     "volumeUsd24h": 372.34,
     "priceUsd": "0.000003084",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1930,7 +1948,7 @@
     "volumeUsd24h": 17.88,
     "priceUsd": "0.000002035",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1962,7 +1980,7 @@
     "volumeUsd24h": 1018.54,
     "priceUsd": "0.000002035",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -1994,7 +2012,7 @@
     "volumeUsd24h": 257.3,
     "priceUsd": "0.000004690",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2026,7 +2044,7 @@
     "volumeUsd24h": 369.46,
     "priceUsd": "0.000003922",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2058,7 +2076,7 @@
     "volumeUsd24h": 355.91,
     "priceUsd": "0.000002035",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2090,7 +2108,7 @@
     "volumeUsd24h": 255.25,
     "priceUsd": "0.000003257",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2122,7 +2140,7 @@
     "volumeUsd24h": 104.25,
     "priceUsd": "0.0000002102",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2154,7 +2172,7 @@
     "volumeUsd24h": 647.67,
     "priceUsd": "0.00000007521",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2186,7 +2204,7 @@
     "volumeUsd24h": 420.28,
     "priceUsd": "0.00001410",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2218,7 +2236,7 @@
     "volumeUsd24h": 149.93,
     "priceUsd": "0.000002035",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2250,7 +2268,7 @@
     "volumeUsd24h": 203.15,
     "priceUsd": "0.000001050",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2282,7 +2300,7 @@
     "volumeUsd24h": 0,
     "priceUsd": "0.000002079",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2314,7 +2332,7 @@
     "volumeUsd24h": 244.03,
     "priceUsd": "0.000002288",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2346,7 +2364,7 @@
     "volumeUsd24h": 2667.5,
     "priceUsd": "0.000002035",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2378,7 +2396,7 @@
     "volumeUsd24h": 767.01,
     "priceUsd": "0.0000006525",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2410,7 +2428,7 @@
     "volumeUsd24h": 440.71,
     "priceUsd": "0.000002908",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2437,12 +2455,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 1071,
-    "marketSource": "market",
-    "volumeUsd24h": 49.06,
-    "priceUsd": "0.000001071",
+    "marketCapUsd": 2024.4147615788913,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2471,10 +2489,10 @@
     "metadataLoaded": true,
     "marketCapUsd": 2091,
     "marketSource": "market",
-    "volumeUsd24h": 1900.36,
+    "volumeUsd24h": 208.54,
     "priceUsd": "0.000002091",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2501,12 +2519,12 @@
     "website": "https://GTATrenches.com",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2084,
-    "marketSource": "market",
-    "volumeUsd24h": 3032.18,
-    "priceUsd": "0.000002084",
+    "marketCapUsd": 2151.395977265964,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2533,12 +2551,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2001,
-    "marketSource": "market",
-    "volumeUsd24h": 2222.59,
-    "priceUsd": "0.000002001",
+    "marketCapUsd": 2658.1612079647894,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2565,12 +2583,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 11240,
-    "marketSource": "market",
-    "volumeUsd24h": 756.54,
-    "priceUsd": "0.00001124",
+    "marketCapUsd": 2036.4053460124928,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2599,10 +2617,10 @@
     "metadataLoaded": true,
     "marketCapUsd": 2105,
     "marketSource": "market",
-    "volumeUsd24h": 147.79,
+    "volumeUsd24h": 74.38,
     "priceUsd": "0.000002105",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2629,12 +2647,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2078,
-    "marketSource": "market",
-    "volumeUsd24h": 0.14,
-    "priceUsd": "0.000002078",
+    "marketCapUsd": 2016.706256434762,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2661,12 +2679,12 @@
     "website": "https://x.com/Kotaku/status/2123023602932953263",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2013.9476386179067,
+    "marketCapUsd": 2016.440708396313,
     "marketSource": "curve",
     "volumeUsd24h": 0,
     "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2693,12 +2711,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2111,
-    "marketSource": "market",
-    "volumeUsd24h": 568.81,
-    "priceUsd": "0.000002111",
+    "marketCapUsd": 2153.110578622801,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2725,12 +2743,12 @@
     "website": "https://www.gamercoin.fun/",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2070,
+    "marketCapUsd": 2052,
     "marketSource": "market",
-    "volumeUsd24h": 7058.3,
-    "priceUsd": "0.000002070",
+    "volumeUsd24h": 1.48,
+    "priceUsd": "0.000002052",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2757,12 +2775,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2080,
-    "marketSource": "market",
-    "volumeUsd24h": 22.52,
-    "priceUsd": "0.000002080",
+    "marketCapUsd": 2035.0713103398175,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2789,12 +2807,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 9.488999999999999,
-    "marketSource": "market",
-    "volumeUsd24h": 1362.78,
-    "priceUsd": "0.000000009489",
+    "marketCapUsd": 2031.0718263394758,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2821,12 +2839,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2075,
-    "marketSource": "market",
-    "volumeUsd24h": 139.44,
-    "priceUsd": "0.000002075",
+    "marketCapUsd": 2024.4147615788913,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2853,12 +2871,12 @@
     "website": "https://x.com/ThingsByManni/status/2123244748488245562?a=fHbJfn2l706LnbmAqNE&s=20",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2080,
-    "marketSource": "market",
-    "volumeUsd24h": 5861.82,
-    "priceUsd": "0.000002080",
+    "marketCapUsd": 2016.440708396313,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2885,12 +2903,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2086,
-    "marketSource": "market",
-    "volumeUsd24h": 91.92,
-    "priceUsd": "0.000002086",
+    "marketCapUsd": 2100.2511029096245,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2917,12 +2935,12 @@
     "website": "https://trucefun.xyz/",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2078,
-    "marketSource": "market",
-    "volumeUsd24h": 286.3,
-    "priceUsd": "0.000002078",
+    "marketCapUsd": 2049.769742273522,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2949,12 +2967,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 291.7,
-    "marketSource": "market",
-    "volumeUsd24h": 2745.02,
-    "priceUsd": "0.0000002917",
+    "marketCapUsd": 2102.308538761184,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -2981,12 +2999,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2091,
-    "marketSource": "market",
-    "volumeUsd24h": 2081.02,
-    "priceUsd": "0.000002091",
+    "marketCapUsd": 2056.4683317322233,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -3007,12 +3025,12 @@
     "pool": "pump",
     "source": "pumpportal:new-token",
     "seenAt": 1795061047658,
-    "marketCapUsd": 2078,
-    "marketSource": "market",
-    "volumeUsd24h": 1025.24,
-    "priceUsd": "0.000002078",
+    "marketCapUsd": 2734.9272617120278,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -3039,12 +3057,12 @@
     "website": "https://www.rockstargames.com/VI/only-in-leonida/lucia",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2083,
-    "marketSource": "market",
-    "volumeUsd24h": 0.14,
-    "priceUsd": "0.000002083",
+    "marketCapUsd": 2016.5734801628141,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -3073,10 +3091,10 @@
     "metadataLoaded": true,
     "marketCapUsd": 2065,
     "marketSource": "market",
-    "volumeUsd24h": 14.63,
+    "volumeUsd24h": 7.29,
     "priceUsd": "0.000002065",
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -3103,12 +3121,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 5389,
-    "marketSource": "market",
-    "volumeUsd24h": 1022.6,
-    "priceUsd": "0.000005389",
+    "marketCapUsd": 2165.1319102996695,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -3135,12 +3153,12 @@
     "website": "",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 4662,
-    "marketSource": "market",
-    "volumeUsd24h": 503.76,
-    "priceUsd": "0.000004662",
+    "marketCapUsd": 2032.404550570858,
+    "marketSource": "curve",
+    "volumeUsd24h": 0,
+    "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   },
   {
@@ -3167,12 +3185,12 @@
     "website": "https://x.com/vladtenev/status/2123262600201097497?a=w4bFCEFpewbNmRBQlWU&s=46",
     "platform": "",
     "metadataLoaded": true,
-    "marketCapUsd": 2013.9476386179067,
+    "marketCapUsd": 2016.440708396313,
     "marketSource": "curve",
     "volumeUsd24h": 0,
     "priceUsd": null,
     "marketImage": "",
-    "marketUpdatedAt": 1795140501023,
+    "marketUpdatedAt": 1795168857425,
     "localImage": ""
   }
 ]
